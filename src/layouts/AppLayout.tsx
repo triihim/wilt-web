@@ -15,7 +15,7 @@ function MainHeader() {
   const navigation = useNavigation();
 
   return (
-    <header className="flex items-center justify-between py-4 relative">
+    <header className="flex items-center justify-between py-5 md:py-8 relative">
       <h1 className="text-4xl font-bold align-bottom">wilt</h1>
       {navigation.state === 'loading' && <span>Loading ...</span>}
       <MainMenuNavigation />

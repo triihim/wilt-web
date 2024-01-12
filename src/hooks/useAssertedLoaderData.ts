@@ -3,7 +3,7 @@
  */
 
 import { useLoaderData } from 'react-router-dom';
-import { ValidatorFunction, assertExpectedData } from '../../util/validators';
+import { ValidatorFunction, assertExpectedData } from '../util/validators';
 
 export default function useAssertedLoaderData<TData>(validator: ValidatorFunction) {
   const data = useLoaderData();

@@ -6,3 +6,12 @@ export interface ILearning {
   createdAt: string;
   updatedAt: string;
 }
+
+export type FetcherData =
+  | {
+      status: 'error';
+      message: string;
+    }
+  | {
+      status: 'success';
+    };

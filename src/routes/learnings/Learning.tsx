@@ -1,13 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { Await } from '../../typed-react-router';
+import { Await, useNavigate } from 'react-router-dom';
 import { Suspense } from 'react';
 import { ValidatorFunction } from '../../util/validators';
-import useAssertedLoaderData from '../../typed-react-router/hooks/useAssertedLoaderData';
+import useAssertedLoaderData from '../../hooks/useAssertedLoaderData';
 import { ILearning } from '../../types';
 import { LoaderResponse } from './Learning.loader';
 import Button from '../../components/Button';
 
-// Note: cannot validate the result of a promise -> must be validated later.
 const loaderDataValidator: ValidatorFunction = (data) =>
   !!data && typeof data === 'object' && 'learningPromise' in data;
 
@@ -44,7 +42,7 @@ function LearningDetails({ learning }: LearningDetailsProps) {
 
   return (
     <>
-      <Button variant="secondary" onClick={() => navigate('/learnings')} className="md:hidden mb-2">
+      <Button variant="secondary" onClick={() => navigate(-1)} className="md:hidden mb-2">
         Return
       </Button>
       <h2 className="font-bold text-2xl">{learning.title}</h2>

@@ -63,6 +63,20 @@ export const getLearning = async (learningId: number): Promise<ILearning | undef
   return MOCK_LEARNINGS.find((l) => l.id === learningId);
 };
 
+export const createLearning = async (title: string, description: string) => {
+  await mockNetworkDelay();
+  const nextId = Math.max(...MOCK_LEARNINGS.map((l) => l.id)) + 1;
+  MOCK_LEARNINGS.push({
+    id: nextId,
+    title,
+    description,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    owner: 'owner-id-123',
+  });
+  return { ok: true };
+};
+
 const mockNetworkDelay = (): Promise<void> => {
   return new Promise((resolve) => setTimeout(() => resolve(), 500));
 };
