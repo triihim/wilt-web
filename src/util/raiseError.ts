@@ -1,3 +1,5 @@
-export default function raiseError(message: string): never {
-  throw new Error(message);
+import AppError, { AppErrorType } from '../error';
+
+export default function raiseError(type: AppErrorType = 'unspecified', message?: string): never {
+  throw new AppError(type, message);
 }

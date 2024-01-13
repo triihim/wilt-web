@@ -15,6 +15,7 @@ import learningLoader from './routes/learnings/Learning.loader';
 import AppLayout from './layouts/AppLayout';
 import logoutAction from './routes/logout/Logout.action';
 import { createLearningAction } from './routes/learnings/Learning.action';
+import ErrorView from './routes/ErrorView';
 
 // TODO: Move to its own file
 // TODO: Consider switching to createRoutesFromElements for readability
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <RequireAuth />,
+        errorElement: <ErrorView />,
         children: [
           {
             element: <AppLayout />,

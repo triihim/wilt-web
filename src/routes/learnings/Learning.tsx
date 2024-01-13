@@ -5,11 +5,13 @@ import useAssertedLoaderData from '../../hooks/useAssertedLoaderData';
 import { ILearning } from '../../types';
 import { LoaderResponse } from './Learning.loader';
 import Button from '../../components/Button';
+import ErrorView from '../ErrorView';
+import AppError from '../../error';
 
 const loaderDataValidator: ValidatorFunction = (data) =>
   !!data && typeof data === 'object' && 'learningPromise' in data;
 
-const expectedLearningKeys: Array<keyof ILearning> = ['id', 'createdAt', 'updatedAt', 'title', 'description', 'owner'];
+const expectedLearningKeys: Array<keyof ILearning> = ['id', 'createdAt', 'updatedAt', 'title', 'description'];
 
 const learningObjectValidator = (maybeLearning: unknown): maybeLearning is ILearning =>
   !!maybeLearning && typeof maybeLearning === 'object' && expectedLearningKeys.every((key) => key in maybeLearning);
@@ -19,12 +21,12 @@ export default function Learning() {
   return (
     <article className="basis-3/4 md:px-10">
       <Suspense fallback={<p>Loading...</p>}>
-        <Await resolve={data.learningPromise} errorElement={<p>Something went wrong</p>}>
+        <Await resolve={data.learningPromise} errorElement={<ErrorView />}>
           {(learning) => {
             if (learningObjectValidator(learning)) {
               return <LearningDetails learning={learning} />;
             } else {
-              throw new Error('Received invalid object to render as a learning');
+              throw new AppError('invalid-loader-response', 'Received invalid object to render as a learning');
             }
           }}
         </Await>

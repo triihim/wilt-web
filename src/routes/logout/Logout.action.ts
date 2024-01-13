@@ -1,7 +1,8 @@
 import { redirect } from 'react-router-dom';
-import ClientStorage from '../../util/ClientStorage';
+import clientStorage from '../../clientStorage';
 
 export default function action() {
-  ClientStorage.setAccessToken(null);
+  clientStorage.setAccessToken(null);
+  clientStorage.setRefreshToken(null);
   return redirect('/login');
 }

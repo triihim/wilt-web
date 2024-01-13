@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom';
-import ClientStorage from '../../util/ClientStorage';
+import ClientStorage from '../../clientStorage';
 
 export default function loader() {
   const alreadyExistingAccessToken = ClientStorage.getAccessToken();
