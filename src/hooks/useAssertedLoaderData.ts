@@ -5,7 +5,7 @@
 import { useLoaderData } from 'react-router-dom';
 import { ValidatorFunction, assertExpectedData } from '../util/validators';
 
-export default function useAssertedLoaderData<TData>(validator: ValidatorFunction) {
+export default function useAssertedLoaderData<TData>(validator: ValidatorFunction): TData | never {
   const data = useLoaderData();
   assertExpectedData<TData>(data, validator);
   return data;

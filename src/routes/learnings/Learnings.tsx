@@ -16,7 +16,7 @@ export default function Learnings() {
   return (
     <>
       <LearningControls />
-      <div className="flex mt-3">
+      <div className="flex mt-5">
         <ul className={learningDetailsShown ? 'hidden md:block' : 'flex-grow'}>
           {data.learnings.map((learning) => (
             <li key={learning.id}>
