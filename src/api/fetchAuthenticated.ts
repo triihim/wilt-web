@@ -1,8 +1,8 @@
 import clientStorage from '../clientStorage';
 import AppError from '../error';
 
-type FetchParameters = Parameters<typeof fetch>;
-type FetchReturnType = ReturnType<typeof fetch>;
+export type FetchParameters = Parameters<typeof fetch>;
+export type FetchReturnType = ReturnType<typeof fetch>;
 
 const withAuthToken = (requestInit?: RequestInit) => ({
   ...requestInit,
@@ -31,6 +31,20 @@ const refreshToken = async () => {
   }
 };
 
+const handleFailedFetch = (response: Response) => {
+  const status = response.status;
+  if (status === 401 || status === 403) {
+    throw new AppError('unauthorized');
+  } else if (status === 400) {
+    throw new AppError('bad-request');
+  } else if (status === 404) {
+    throw new AppError('not-found');
+  } else if (status > 400) {
+    throw new AppError('unspecified');
+  }
+};
+
+// TODO: Timeout
 export default async function fetchAuthenticated(url: FetchParameters[0], init?: FetchParameters[1]): FetchReturnType {
   let response = await fetch(url, withAuthToken(init));
 
@@ -39,9 +53,7 @@ export default async function fetchAuthenticated(url: FetchParameters[0], init?:
     response = await fetch(url, withAuthToken(init));
   }
 
-  if (response.status === 401 || response.status === 403) {
-    throw new AppError('unauthorized');
-  }
+  if (!response.ok) handleFailedFetch(response);
 
   return response;
 }

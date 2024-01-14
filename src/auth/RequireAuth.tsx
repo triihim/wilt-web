@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import ClientStorage from '../util/ClientStorage';
+import ClientStorage from '../clientStorage';
 
 export function RequireAuth() {
   const auth = ClientStorage.getAccessToken();

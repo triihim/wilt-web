@@ -8,6 +8,3 @@ export const isExpectedData = <TExpected>(data: unknown, validator: ValidatorFun
 export function assertExpectedData<TExpected>(data: unknown, validator: ValidatorFunction): asserts data is TExpected {
   if (!validator(data)) throw new AppError('unspecified', 'Data assertion failed');
 }
-
-export const hasMessage = (data: unknown): data is { message: string } =>
-  !!data && typeof data === 'object' && 'message' in data && typeof data.message === 'string';

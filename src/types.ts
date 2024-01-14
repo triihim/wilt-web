@@ -10,7 +10,7 @@ export interface ILearning {
 export type FetcherData =
   | {
       status: 'error';
-      message: string;
+      messages: Array<string>;
     }
   | {
       status: 'success';

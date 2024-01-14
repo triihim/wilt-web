@@ -1,12 +1,22 @@
-export type AppErrorType = 'unauthorized' | 'invalid-user-input' | 'invalid-loader-response' | 'unspecified';
+export type AppErrorType =
+  | 'unauthorized'
+  | 'bad-request'
+  | 'not-found'
+  | 'invalid-user-input'
+  | 'invalid-loader-response'
+  | 'invalid-form-data'
+  | 'unspecified';
 
 export default class AppError {
   readonly #type: AppErrorType;
-  readonly #message?: string;
+  readonly #messages?: Array<string>;
 
-  constructor(type?: AppErrorType, message?: string) {
+  constructor(type?: AppErrorType, messages?: string | Array<string>) {
     this.#type = type || 'unspecified';
-    this.#message = message;
+    if (messages) {
+      this.#messages = Array.isArray(messages) ? messages : [messages];
+    }
+    console.error(type, messages);
   }
 
   get type() {
@@ -14,6 +24,6 @@ export default class AppError {
   }
 
   get message() {
-    return this.#message;
+    return this.#messages;
   }
 }

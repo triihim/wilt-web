@@ -45,8 +45,10 @@ function LearningCreationForm(props: LearningCreationFormProps) {
       <fetcher.Form className="flex flex-col gap-5" method="post" action="/learnings/new">
         <Input name="title" label="Title" disabled={isSubmitting} />
         <Input name="description" label="Description" disabled={isSubmitting} />
-        <div className="flex gap-5 justify-between">
-          <p className="text-red-500">{fetcher.data?.status === 'error' ? fetcher.data.message : ''}</p>
+        <div className="flex gap-5 justify-between items-center">
+          <div className="text-red-500">
+            {fetcher.data?.status === 'error' && fetcher.data.messages.map((msg) => <p key={msg}>{msg}</p>)}
+          </div>
           <div className="flex gap-5">
             <Button variant="secondary" type="button" onClick={props.onCancel} disabled={isSubmitting}>
               Cancel
