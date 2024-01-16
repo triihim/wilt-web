@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     children: [
-      { index: true, element: <Navigate to={'/timeline'} replace /> },
+      { index: true, element: <Navigate to={'/learnings'} replace /> },
       {
         path: '/login',
         element: <Login />,

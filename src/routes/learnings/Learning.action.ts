@@ -4,7 +4,7 @@ import { FetcherData } from '../../types';
 import raiseError from '../../util/raiseError';
 import AppError from '../../error';
 
-const constraints = {
+const CONSTRAINTS = {
   title: {
     length: {
       min: 5,
@@ -29,18 +29,18 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
 
     const validationErrors = [];
 
-    if (title.length < constraints.title.length.min || title.length > constraints.title.length.max) {
+    if (title.length < CONSTRAINTS.title.length.min || title.length > CONSTRAINTS.title.length.max) {
       validationErrors.push(
-        `Title should have ${constraints.title.length.min}-${constraints.title.length.max} characters`,
+        `Title should have ${CONSTRAINTS.title.length.min}-${CONSTRAINTS.title.length.max} characters`,
       );
     }
 
     if (
-      description.length < constraints.description.length.min ||
-      description.length > constraints.description.length.max
+      description.length < CONSTRAINTS.description.length.min ||
+      description.length > CONSTRAINTS.description.length.max
     ) {
       validationErrors.push(
-        `Description should have ${constraints.description.length.min}-${constraints.description.length.max} characters`,
+        `Description should have ${CONSTRAINTS.description.length.min}-${CONSTRAINTS.description.length.max} characters`,
       );
     }
 
@@ -48,9 +48,9 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
       raiseError('invalid-user-input', validationErrors);
     }
 
-    await createLearning(title as string, description as string);
+    const response = await createLearning(title as string, description as string);
 
-    return { status: 'success' };
+    return { status: 'success', response };
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.message ? err.message : ['Could not create the learning'];
     return { status: 'error', messages: uiError };
