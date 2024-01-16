@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { ModalContextProvider } from '../Modal';
+import { ModalContextProvider } from '../components/modal/ModalContext';
 
 export function RootLayout() {
   return (

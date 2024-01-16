@@ -18,15 +18,11 @@ export function ModalContextProvider(props: PropsWithChildren) {
   );
 }
 
-export function ModalPortal(props: PropsWithChildren) {
-  return createPortal(<ModalWrapper content={props.children} />, document.body);
-}
-
-type ModalProps = {
+type ModalWrapperProps = {
   content: React.ReactNode;
 };
 
-function ModalWrapper(props: ModalProps) {
+function ModalWrapper(props: ModalWrapperProps) {
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center">
       <div className="bg-white z-10 rounded-md p-5 w-9/12 md:w-1/2">{props.content}</div>

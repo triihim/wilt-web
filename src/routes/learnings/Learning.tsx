@@ -6,7 +6,7 @@ import { ILearning } from '../../types';
 import { LoaderResponse } from './Learning.loader';
 import Button from '../../components/Button';
 import ErrorView from '../ErrorView';
-import AppError from '../../error';
+import { ModalContext } from '../../components/modal/ModalContext';
 
 const loaderDataValidator: ValidatorFunction = (data) =>
   !!data && typeof data === 'object' && 'learningPromise' in data;
