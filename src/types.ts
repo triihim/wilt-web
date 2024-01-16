@@ -14,4 +14,5 @@ export type FetcherData =
     }
   | {
       status: 'success';
+      response: unknown;
     };
