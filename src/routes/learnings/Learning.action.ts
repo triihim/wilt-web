@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from 'react-router-dom';
-import { createLearning } from '../../api/real';
+import { createLearning, deleteLearning } from '../../api/real';
 import { FetcherData } from '../../types';
 import raiseError from '../../util/raiseError';
 import AppError from '../../error';
@@ -53,6 +53,21 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
     return { status: 'success', response };
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.message ? err.message : ['Could not create the learning'];
+    return { status: 'error', messages: uiError };
+  }
+}
+
+export async function deleteLearningAction(args: ActionFunctionArgs): Promise<FetcherData> {
+  const learningId = args.params.learningId;
+
+  try {
+    if (!learningId || isNaN(+learningId)) {
+      raiseError('bad-request', 'Delete learning action received invalid learning id');
+    }
+    await deleteLearning(+learningId);
+    return { status: 'success', response: null };
+  } catch (err: unknown) {
+    const uiError = err instanceof AppError && err.message ? err.message : ['Could not delete the learning'];
     return { status: 'error', messages: uiError };
   }
 }

@@ -38,3 +38,10 @@ export const createLearning = async (title: string, description: string): Promis
   });
   return response.json();
 };
+
+export const deleteLearning = async (learningId: number): Promise<unknown> => {
+  const response = await fetchAuthenticated(`${BASE_URL}/learning/${learningId}`, {
+    method: 'delete',
+  });
+  return response;
+};

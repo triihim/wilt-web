@@ -1,53 +1,84 @@
-import { Await, useNavigate } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Await, useNavigate, useFetcher } from 'react-router-dom';
+import { Suspense, useContext, useEffect } from 'react';
 import { ValidatorFunction } from '../../util/validators';
 import useAssertedLoaderData from '../../hooks/useAssertedLoaderData';
-import { ILearning } from '../../types';
+import { FetcherData, ILearning } from '../../types';
 import { LoaderResponse } from './Learning.loader';
 import Button from '../../components/Button';
 import ErrorView from '../ErrorView';
+import { CenteredLoadingIndicator } from '../../components/LoadingIndicator';
+import ControlPanel from '../../components/ControlPanel';
 import { ModalContext } from '../../components/modal/ModalContext';
+import ConfirmModal from '../../components/modal/ConfirmModal';
+import raiseError from '../../util/raiseError';
 
 const loaderDataValidator: ValidatorFunction = (data) =>
   !!data && typeof data === 'object' && 'learningPromise' in data;
 
 const expectedLearningKeys: Array<keyof ILearning> = ['id', 'createdAt', 'updatedAt', 'title', 'description'];
 
-const learningObjectValidator = (maybeLearning: unknown): maybeLearning is ILearning =>
+const isLearning = (maybeLearning: unknown): maybeLearning is ILearning =>
   !!maybeLearning && typeof maybeLearning === 'object' && expectedLearningKeys.every((key) => key in maybeLearning);
 
 export default function Learning() {
   const data = useAssertedLoaderData<LoaderResponse>(loaderDataValidator);
   return (
-    <article className="basis-3/4 md:px-10">
-      <Suspense fallback={<p>Loading...</p>}>
-        <Await resolve={data.learningPromise} errorElement={<ErrorView />}>
-          {(learning) => {
-            if (learningObjectValidator(learning)) {
-              return <LearningDetails learning={learning} />;
-            } else {
-              throw new AppError('invalid-loader-response', 'Received invalid object to render as a learning');
-            }
-          }}
-        </Await>
-      </Suspense>
-    </article>
+    <Suspense fallback={<CenteredLoadingIndicator />}>
+      <Await resolve={data.learningPromise} errorElement={<ErrorView />}>
+        {(learning) =>
+          isLearning(learning) ? (
+            <LearningView learning={learning} />
+          ) : (
+            raiseError('invalid-loader-response', 'Received invalid object to render as a learning')
+          )
+        }
+      </Await>
+    </Suspense>
   );
 }
 
-type LearningDetailsProps = {
+type LearningViewProps = {
   learning: ILearning;
 };
 
-function LearningDetails({ learning }: LearningDetailsProps) {
+function LearningView(props: LearningViewProps) {
   const navigate = useNavigate();
+  const { setModalContent } = useContext(ModalContext);
+  const fetcher = useFetcher<FetcherData>();
+
+  const initiateLearningDeletion = () => {
+    fetcher.submit(null, {
+      action: `/learnings/${props.learning.id}/delete`,
+      method: 'DELETE',
+      navigate: false,
+    });
+    setModalContent(null);
+  };
+
+  useEffect(() => {
+    if (fetcher.data?.status === 'success') {
+      navigate('/learnings', { replace: true });
+    }
+  }, [fetcher.data, navigate]);
+
+  if (fetcher.state === 'submitting') return <CenteredLoadingIndicator />;
 
   return (
     <>
-      <Button variant="secondary" onClick={() => navigate(-1)} className="md:hidden mb-2">
-        Return
-      </Button>
-      <h2 className="font-bold text-2xl">{learning.title}</h2>
+      <LearningControls
+        learning={props.learning}
+        onDelete={() => setModalContent(<ConfirmModal prompt="Confirm delete" onConfirm={initiateLearningDeletion} />)}
+        onReturn={() => navigate(-1)}
+      />
+      <LearningDetails learning={props.learning} />
+    </>
+  );
+}
+
+function LearningDetails({ learning }: LearningViewProps) {
+  return (
+    <article>
+      <h2 className="font-bold text-2xl mt-4">{learning.title}</h2>
       <p className="text-sm">
         Created: <time>{learning.createdAt}</time>
       </p>
@@ -55,6 +86,28 @@ function LearningDetails({ learning }: LearningDetailsProps) {
         Updated: <time>{learning.updatedAt}</time>
       </p>
       <p className="mt-4">{learning.description}</p>
-    </>
+    </article>
+  );
+}
+
+type LearningControlsProps = LearningViewProps & {
+  onReturn(): void;
+  onDelete(): void;
+};
+
+function LearningControls(props: LearningControlsProps) {
+  return (
+    <ControlPanel alwaysSingleRow>
+      <ControlPanel.ControlGroup>
+        <Button variant="secondary" onClick={props.onReturn}>
+          Return
+        </Button>
+      </ControlPanel.ControlGroup>
+      <ControlPanel.ControlGroup alignItems="right">
+        <Button variant="secondary" onClick={props.onDelete}>
+          Delete
+        </Button>
+      </ControlPanel.ControlGroup>
+    </ControlPanel>
   );
 }
