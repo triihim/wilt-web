@@ -16,7 +16,7 @@ const loaderDataValidator: ValidatorFunction = (data) => !!data && typeof data =
 export default function Learnings() {
   const data = useAssertedLoaderData<LoaderResponse>(loaderDataValidator);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [titleFilter, setTitleFilter] = useState('');
+  const [titleFilter, setTitleFilter] = useState(searchParams.get('title') || '');
   const debouncedTitleFilter = useDebounce(titleFilter, FILTER_DEBOUNCE_TIME);
 
   const currentPage = data.page;
@@ -26,29 +26,42 @@ export default function Learnings() {
   const hasPreviousPage = currentPage > 0;
 
   const nextPage = () => {
-    setSearchParams((params) => {
-      const currentPage = +(params.get('page') ?? 0);
-      const nextPage = Math.min(currentPage + 1, Math.floor(data.totalLearningCount / PAGE_SIZE));
-      params.set('page', nextPage.toString());
-      return params;
-    });
+    setSearchParams(
+      (params) => {
+        const currentPage = +(params.get('page') ?? 0);
+        const nextPage = Math.min(currentPage + 1, Math.floor(data.totalLearningCount / PAGE_SIZE));
+        params.set('page', nextPage.toString());
+        return params;
+      },
+      { replace: true },
+    );
   };
 
   const previousPage = () => {
-    setSearchParams((params) => {
-      const currentPage = +(params.get('page') ?? 0);
-      const previousPage = Math.max(currentPage - 1, 0);
-      params.set('page', previousPage.toString());
-      return params;
-    });
+    setSearchParams(
+      (params) => {
+        const currentPage = +(params.get('page') ?? 0);
+        const previousPage = Math.max(currentPage - 1, 0);
+        params.set('page', previousPage.toString());
+        return params;
+      },
+      { replace: true },
+    );
   };
 
   useEffect(() => {
-    setSearchParams((params) => {
-      params.set('title', debouncedTitleFilter);
-      params.set('page', '0');
-      return params;
-    });
+    // Guard against returning to first page when navigating between pages through history.
+    if (debouncedTitleFilter === searchParams.get('title')) return;
+
+    // When filter changes -> go back to first page.
+    setSearchParams(
+      (params) => {
+        params.set('title', debouncedTitleFilter);
+        params.set('page', '0');
+        return params;
+      },
+      { replace: true },
+    );
   }, [debouncedTitleFilter]);
 
   return (
