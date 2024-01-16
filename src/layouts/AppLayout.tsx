@@ -1,6 +1,7 @@
 import { Form, NavLink, NavLinkProps, Outlet, useNavigation } from 'react-router-dom';
 import { useState } from 'react';
 import Button from '../components/Button';
+import { LoadingIndicator } from '../components/LoadingIndicator';
 
 export default function AppLayout() {
   return (
@@ -13,11 +14,12 @@ export default function AppLayout() {
 
 function MainHeader() {
   const navigation = useNavigation();
-
   return (
     <header className="flex items-center justify-between py-5 md:py-8 relative">
-      <h1 className="text-4xl font-bold align-bottom">wilt</h1>
-      {navigation.state === 'loading' && <span>Loading ...</span>}
+      <div className="flex items-center gap-5">
+        <h1 className="text-4xl font-bold align-bottom">wilt</h1>
+        {navigation.state === 'loading' && <LoadingIndicator />}
+      </div>
       <MainMenuNavigation />
     </header>
   );
