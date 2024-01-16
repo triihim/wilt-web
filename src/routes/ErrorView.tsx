@@ -5,6 +5,8 @@ import clientStorage from '../clientStorage';
 export default function ErrorView() {
   const error = useRouteError();
 
+  console.error(error);
+
   if (error instanceof AppError && error.type === 'unauthorized') {
     clientStorage.setAccessToken(null);
     clientStorage.setRefreshToken(null);
