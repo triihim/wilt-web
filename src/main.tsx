@@ -39,7 +39,6 @@ const router = createBrowserRouter([
           {
             element: <AppLayout />,
             children: [
-              { path: '/timeline', element: <Timeline /> },
               {
                 path: '/learnings',
                 element: <Learnings />,

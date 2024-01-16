@@ -43,9 +43,6 @@ function MainMenuNavigation() {
         >
           <ul>
             <li className="py-3 px-4">
-              <NavLink to={'/timeline'}>Timeline</NavLink>
-            </li>
-            <li className="py-3 px-4">
               <NavLink to={'/learnings'}>Learnings</NavLink>
             </li>
             <li className="py-3 px-4">
@@ -59,9 +56,6 @@ function MainMenuNavigation() {
       <div className="hidden md:flex md:items-center md:gap-10">
         <nav>
           <ul className="flex font-bold gap-5 md:text-lg md:gap-10">
-            <li>
-              <MainHeaderNavLink to={'/timeline'}>Timeline</MainHeaderNavLink>
-            </li>
             <li>
               <MainHeaderNavLink to={'/learnings'}>Learnings</MainHeaderNavLink>
             </li>
