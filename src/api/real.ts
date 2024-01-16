@@ -14,10 +14,11 @@ export const login = async (email: string, password: string): Promise<unknown> =
   return response.json();
 };
 
-export const getLearnings = async (from: Date, to: Date): Promise<unknown> => {
-  const url = new URL(`${BASE_URL}/learning`);
-  url.searchParams.append('from', from.toISOString());
-  url.searchParams.append('to', to.toISOString());
+export const getLearningsPage = async (page: number, pageSize: number, titleFilter: string): Promise<unknown> => {
+  const url = new URL(`${BASE_URL}/learning/page`);
+  url.searchParams.append('page', page.toString());
+  url.searchParams.append('pageSize', pageSize.toString());
+  url.searchParams.append('title', titleFilter);
   const response = await fetchAuthenticated(url);
   return response.json();
 };
