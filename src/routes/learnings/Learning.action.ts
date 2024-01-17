@@ -52,7 +52,7 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
 
     return { status: 'success', response };
   } catch (err: unknown) {
-    const uiError = err instanceof AppError && err.message ? err.message : ['Could not create the learning'];
+    const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not create the learning'];
     return { status: 'error', messages: uiError };
   }
 }
@@ -67,7 +67,7 @@ export async function deleteLearningAction(args: ActionFunctionArgs): Promise<Fe
     await deleteLearning(+learningId);
     return { status: 'success', response: null };
   } catch (err: unknown) {
-    const uiError = err instanceof AppError && err.message ? err.message : ['Could not delete the learning'];
+    const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not delete the learning'];
     return { status: 'error', messages: uiError };
   }
 }

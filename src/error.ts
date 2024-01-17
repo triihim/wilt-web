@@ -23,7 +23,7 @@ export default class AppError {
     return this.#type;
   }
 
-  get message() {
+  get messages() {
     return this.#messages;
   }
 }
