@@ -1,4 +1,4 @@
-import { Learning } from '../types';
+import { ILearning } from '../types';
 
 const MOCK_LEARNINGS = [
   {
@@ -138,7 +138,7 @@ export const getLearnings = async () => {
   return MOCK_LEARNINGS.map((l) => ({ id: l.id, title: l.title, createdAt: l.createdAt }));
 };
 
-export const getLearning = async (learningId: number): Promise<Learning | undefined> => {
+export const getLearning = async (learningId: number): Promise<ILearning | undefined> => {
   await mockNetworkDelay();
   return MOCK_LEARNINGS.find((l) => l.id === learningId);
 };

@@ -9,7 +9,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { withClassAddedToMatchingSections } from '../../util/components';
 import { CenteredLoadingIndicator } from '../../components/LoadingIndicator';
 import ErrorView from '../ErrorView';
-import { Learning } from '../../types';
+import { ILearning } from '../../types';
 import raiseError from '../../util/raiseError';
 
 const FILTER_DEBOUNCE_TIME = 500;
@@ -38,7 +38,7 @@ export default function LearningsPage() {
 }
 
 type LearningsViewProps = {
-  learnings: Array<Pick<Learning, 'id' | 'title' | 'createdAt'>>;
+  learnings: Array<Pick<ILearning, 'id' | 'title' | 'createdAt'>>;
   totalLearningCount: number;
 };
 

@@ -5,7 +5,7 @@ import Input from '../../components/forms/Input';
 import TextArea from '../../components/forms/TextArea';
 import ControlPanel from '../../components/ControlPanel';
 import { useFetcher, useNavigate } from 'react-router-dom';
-import { FetcherData, Learning } from '../../types';
+import { FetcherData, ILearning } from '../../types';
 import SubmitGroup from '../../components/SubmitGroup';
 
 type LearningControlsProps = {
@@ -48,7 +48,7 @@ export default function LearningListControlPanel(props: LearningControlsProps) {
 }
 
 type LearningCreationFormProps = {
-  onSubmitted: (createdLearning: Learning) => void;
+  onSubmitted: (createdLearning: ILearning) => void;
   onCancel: () => void;
 };
 
@@ -60,7 +60,7 @@ function LearningCreationForm(props: LearningCreationFormProps) {
   useEffect(() => {
     if (fetcher.data?.status === 'success') {
       // TODO: Validate response type
-      props.onSubmitted(fetcher.data.response as Learning);
+      props.onSubmitted(fetcher.data.response as ILearning);
     }
   }, [fetcher.data, props]);
 

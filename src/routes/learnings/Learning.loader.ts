@@ -1,13 +1,17 @@
 import { defer } from 'react-router-dom';
 import { getLearning } from '../../api/real';
-import { Learning } from '../../types';
+import { ILearning } from '../../types';
 import raiseError from '../../util/raiseError';
+import queryClient from '../../queryClient';
 
 export type LoaderResponse = {
-  learningPromise: Promise<Learning | undefined>;
+  learningPromise: Promise<ILearning | undefined>;
 };
 
 export default async function loader({ params }: { params: { learningId?: string } }) {
   const learningId = params.learningId ?? raiseError('unspecified', 'Missing learning id');
-  return defer({ learningPromise: getLearning(+learningId) } as LoaderResponse);
+
+  const q = queryClient.fetchQuery(['learning', learningId], () => getLearning(+learningId));
+
+  return defer({ learningPromise: q } as LoaderResponse);
 }

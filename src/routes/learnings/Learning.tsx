@@ -2,7 +2,7 @@ import { Await, useNavigate, useFetcher } from 'react-router-dom';
 import { Suspense, useContext, useEffect } from 'react';
 import { ValidatorFunction } from '../../util/validators';
 import useAssertedLoaderData from '../../hooks/useAssertedLoaderData';
-import { FetcherData, Learning } from '../../types';
+import { FetcherData, ILearning } from '../../types';
 import { LoaderResponse } from './Learning.loader';
 import Button from '../../components/Button';
 import ErrorView from '../ErrorView';
@@ -11,14 +11,10 @@ import ControlPanel from '../../components/ControlPanel';
 import { ModalContext } from '../../components/modal/ModalContext';
 import ConfirmModal from '../../components/modal/ConfirmModal';
 import raiseError from '../../util/raiseError';
+import { isLearning } from './Learning.action';
 
 const loaderDataValidator: ValidatorFunction = (data) =>
   !!data && typeof data === 'object' && 'learningPromise' in data;
-
-const expectedLearningKeys: Array<keyof Learning> = ['id', 'createdAt', 'updatedAt', 'title', 'description'];
-
-const isLearning = (maybeLearning: unknown): maybeLearning is Learning =>
-  !!maybeLearning && typeof maybeLearning === 'object' && expectedLearningKeys.every((key) => key in maybeLearning);
 
 export default function Learning() {
   const data = useAssertedLoaderData<LoaderResponse>(loaderDataValidator);
@@ -38,7 +34,7 @@ export default function Learning() {
 }
 
 type LearningViewProps = {
-  learning: Learning;
+  learning: ILearning;
 };
 
 function LearningView(props: LearningViewProps) {

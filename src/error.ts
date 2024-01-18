@@ -5,6 +5,7 @@ export type AppErrorType =
   | 'invalid-user-input'
   | 'invalid-loader-response'
   | 'invalid-form-data'
+  | 'invalid-action-response'
   | 'unspecified';
 
 export default class AppError extends Error {

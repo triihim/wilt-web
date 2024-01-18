@@ -1,8 +1,9 @@
 import { ActionFunctionArgs } from 'react-router-dom';
 import { createLearning, deleteLearning } from '../../api/real';
-import { FetcherData } from '../../types';
+import { FetcherData, ILearning } from '../../types';
 import raiseError from '../../util/raiseError';
 import AppError from '../../error';
+import queryClient from '../../queryClient';
 
 const CONSTRAINTS = {
   title: {
@@ -19,6 +20,12 @@ const CONSTRAINTS = {
   },
 };
 
+const expectedLearningKeys: Array<keyof ILearning> = ['id', 'createdAt', 'updatedAt', 'title', 'description'];
+
+export const isLearning = (maybeLearning: unknown): maybeLearning is ILearning =>
+  !!maybeLearning && typeof maybeLearning === 'object' && expectedLearningKeys.every((key) => key in maybeLearning);
+
+// TODO: Refactor, this is getting messy.
 // TODO: Extract form validation to its own function?
 export async function createLearningAction(args: ActionFunctionArgs): Promise<FetcherData> {
   try {
@@ -50,7 +57,13 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
 
     const response = await createLearning(title as string, description as string);
 
-    return { status: 'success', response };
+    if (isLearning(response)) {
+      await queryClient.invalidateQueries(['learning', response.id]);
+      await queryClient.invalidateQueries('learnings');
+      return { status: 'success', response };
+    } else {
+      raiseError('invalid-action-response');
+    }
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not create the learning'];
     return { status: 'error', messages: uiError };
@@ -65,6 +78,10 @@ export async function deleteLearningAction(args: ActionFunctionArgs): Promise<Fe
       raiseError('bad-request', 'Delete learning action received invalid learning id');
     }
     await deleteLearning(+learningId);
+
+    await queryClient.invalidateQueries(['learning', +learningId]);
+    await queryClient.invalidateQueries('learnings');
+
     return { status: 'success', response: null };
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not delete the learning'];
