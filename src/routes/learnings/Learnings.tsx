@@ -90,20 +90,23 @@ function LearningsView(props: LearningsViewProps) {
   return (
     <>
       <LearningListControlPanel titleFilter={titleFilter} onTitleFilterChange={setTitleFilter} />
-      <div className="bg-slate-100 my-5 rounded-md px-5">
-        <ListControls
-          nextPage={nextPage}
-          previousPage={previousPage}
-          totalPages={totalPages}
-          currentPage={currentPage}
-        />
-        <LearningList learnings={props.learnings} />
-        <ListControls
-          nextPage={nextPage}
-          previousPage={previousPage}
-          totalPages={totalPages}
-          currentPage={currentPage}
-        />
+      <div className="bg-slate-100 my-5 rounded-md p-5">
+        {props.learnings.length < 1 ? (
+          <h2 className="text-center text-lg font-semibold py-10">
+            Hello! Start tracking your progress by adding your first learning{' '}
+            <span className="text-2xl">&#129299;</span>
+          </h2>
+        ) : (
+          <>
+            <LearningList learnings={props.learnings} />
+            <ListControls
+              nextPage={nextPage}
+              previousPage={previousPage}
+              totalPages={totalPages}
+              currentPage={currentPage}
+            />
+          </>
+        )}
       </div>
     </>
   );
@@ -121,7 +124,7 @@ function ListControls(props: ListControlsProps) {
   const hasPreviousPage = props.currentPage > 0;
   const paginationText = props.totalPages > 0 ? `${props.currentPage + 1} / ${props.totalPages}` : '0 of 0';
   return (
-    <div className="flex items-center py-3">
+    <div className="flex items-center pt-5">
       <Button variant="tertiary" className="text-left" onClick={props.previousPage} disabled={!hasPreviousPage}>
         Previous page
       </Button>
