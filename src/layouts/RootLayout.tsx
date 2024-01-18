@@ -1,13 +1,15 @@
-import { Form, NavLink, NavLinkProps, Outlet, useNavigation } from 'react-router-dom';
+import { Form, NavLink, NavLinkProps, Outlet, useLocation, useNavigation } from 'react-router-dom';
 import { ModalContextProvider } from '../components/modal/ModalContext';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import Button from '../components/Button';
 
 export function RootLayout() {
+  const { pathname } = useLocation();
+  const atLoginPage = pathname.indexOf('/login') !== -1;
   return (
     <main className="w-11/12 lg:w-3/4 m-auto font-nunito transition-[width] duration-500">
       <ModalContextProvider>
-        <MainHeader />
+        {!atLoginPage && <MainHeader />}
         <Outlet />
       </ModalContextProvider>
     </main>
