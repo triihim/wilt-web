@@ -7,12 +7,12 @@ import Login from './routes/login/Login';
 import loginLoader from './routes/login/Login.loader';
 import loginAction from './routes/login/Login.action';
 import { RequireAuth } from './auth/RequireAuth';
-import Learnings from './routes/learnings/Learnings';
-import Learning from './routes/learnings/Learning';
-import learningsLoader from './routes/learnings/Learnings.loader';
-import learningLoader from './routes/learnings/Learning.loader';
+import Learnings from './routes/learnings/listPage/LearningListPage';
+import LearningDetailsPage from './routes/learnings/detailsPage/LearningDetailsPage';
+import learningsLoader from './routes/learnings/listPage/loaders';
+import learningLoader from './routes/learnings/detailsPage/loaders';
 import logoutAction from './routes/logout/Logout.action';
-import { createLearningAction, deleteLearningAction } from './routes/learnings/Learning.action';
+import { createLearningAction, deleteLearningAction } from './routes/learnings/detailsPage/actions';
 import ErrorView from './routes/ErrorView';
 
 // TODO: Move to its own file
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
           },
           {
             path: '/learnings/:learningId',
-            element: <Learning />,
+            element: <LearningDetailsPage />,
             loader: learningLoader,
             shouldRevalidate: (args) => args.formMethod !== 'delete',
             children: [
