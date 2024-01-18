@@ -25,7 +25,7 @@ type ModalWrapperProps = {
 function ModalWrapper(props: ModalWrapperProps) {
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center">
-      <div className="bg-white z-10 rounded-md p-5 w-9/12 md:w-1/2">{props.content}</div>
+      <div className="bg-white z-10 rounded-md p-5 w-9/12 md:w-1/2 grow-in">{props.content}</div>
       <Overlay />
     </div>
   );
