@@ -7,11 +7,12 @@ export type AppErrorType =
   | 'invalid-form-data'
   | 'unspecified';
 
-export default class AppError {
+export default class AppError extends Error {
   readonly #type: AppErrorType;
   readonly #messages?: Array<string>;
 
   constructor(type?: AppErrorType, messages?: string | Array<string>) {
+    super();
     this.#type = type || 'unspecified';
     if (messages) {
       this.#messages = Array.isArray(messages) ? messages : [messages];

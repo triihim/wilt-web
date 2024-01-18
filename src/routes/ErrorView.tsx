@@ -13,11 +13,7 @@ export default function ErrorView() {
         return <Navigate to={'/login'} />;
       case 'not-found':
         return <Navigate to={'/'} />;
-      case 'invalid-form-data':
-      case 'bad-request':
-      case 'invalid-loader-response':
-      case 'invalid-user-input':
-      case 'unspecified':
+      default:
         return <ErrorList messages={error.messages} />;
     }
   }
