@@ -11,7 +11,6 @@ import Learnings from './routes/learnings/Learnings';
 import Learning from './routes/learnings/Learning';
 import learningsLoader from './routes/learnings/Learnings.loader';
 import learningLoader from './routes/learnings/Learning.loader';
-import AppLayout from './layouts/AppLayout';
 import logoutAction from './routes/logout/Logout.action';
 import { createLearningAction, deleteLearningAction } from './routes/learnings/Learning.action';
 import ErrorView from './routes/ErrorView';
@@ -37,28 +36,23 @@ const router = createBrowserRouter([
         errorElement: <ErrorView />,
         children: [
           {
-            element: <AppLayout />,
+            path: '/learnings',
+            element: <Learnings />,
+            loader: learningsLoader,
+          },
+          {
+            path: '/learnings/new',
+            action: createLearningAction,
+          },
+          {
+            path: '/learnings/:learningId',
+            element: <Learning />,
+            loader: learningLoader,
+            shouldRevalidate: (args) => args.formMethod !== 'delete',
             children: [
               {
-                path: '/learnings',
-                element: <Learnings />,
-                loader: learningsLoader,
-              },
-              {
-                path: '/learnings/new',
-                action: createLearningAction,
-              },
-              {
-                path: '/learnings/:learningId',
-                element: <Learning />,
-                loader: learningLoader,
-                shouldRevalidate: (args) => args.formMethod !== 'delete',
-                children: [
-                  {
-                    path: '/learnings/:learningId/delete',
-                    action: deleteLearningAction,
-                  },
-                ],
+                path: '/learnings/:learningId/delete',
+                action: deleteLearningAction,
               },
             ],
           },

@@ -2,7 +2,7 @@ import { Await, useNavigate, useFetcher } from 'react-router-dom';
 import { Suspense, useContext, useEffect } from 'react';
 import { ValidatorFunction } from '../../util/validators';
 import useAssertedLoaderData from '../../hooks/useAssertedLoaderData';
-import { FetcherData, ILearning } from '../../types';
+import { FetcherData, Learning } from '../../types';
 import { LoaderResponse } from './Learning.loader';
 import Button from '../../components/Button';
 import ErrorView from '../ErrorView';
@@ -15,9 +15,9 @@ import raiseError from '../../util/raiseError';
 const loaderDataValidator: ValidatorFunction = (data) =>
   !!data && typeof data === 'object' && 'learningPromise' in data;
 
-const expectedLearningKeys: Array<keyof ILearning> = ['id', 'createdAt', 'updatedAt', 'title', 'description'];
+const expectedLearningKeys: Array<keyof Learning> = ['id', 'createdAt', 'updatedAt', 'title', 'description'];
 
-const isLearning = (maybeLearning: unknown): maybeLearning is ILearning =>
+const isLearning = (maybeLearning: unknown): maybeLearning is Learning =>
   !!maybeLearning && typeof maybeLearning === 'object' && expectedLearningKeys.every((key) => key in maybeLearning);
 
 export default function Learning() {
@@ -38,7 +38,7 @@ export default function Learning() {
 }
 
 type LearningViewProps = {
-  learning: ILearning;
+  learning: Learning;
 };
 
 function LearningView(props: LearningViewProps) {
@@ -104,7 +104,7 @@ function LearningControls(props: LearningControlsProps) {
         </Button>
       </ControlPanel.ControlGroup>
       <ControlPanel.ControlGroup alignItems="right">
-        <Button variant="secondary" onClick={props.onDelete}>
+        <Button variant="danger" onClick={props.onDelete}>
           Delete
         </Button>
       </ControlPanel.ControlGroup>

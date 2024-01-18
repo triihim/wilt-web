@@ -1,15 +1,15 @@
 import { Await, Link, useSearchParams } from 'react-router-dom';
 import { ValidatorFunction } from '../../util/validators';
 import useAssertedLoaderData from '../../hooks/useAssertedLoaderData';
-import { LearningListResponse, LoaderResponse, PAGE_SIZE } from './Learnings.loader';
-import LearningListControls from './LearningListControls';
+import { LearningListItem, LearningListResponse, LoaderResponse, PAGE_SIZE } from './Learnings.loader';
+import LearningListControlPanel from './LearningListControlPanel';
 import Button from '../../components/Button';
 import { Suspense, useEffect, useState } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import { withClassAddedToMatchingSections } from '../../util/components';
 import { CenteredLoadingIndicator } from '../../components/LoadingIndicator';
 import ErrorView from '../ErrorView';
-import { ILearning } from '../../types';
+import { Learning } from '../../types';
 import raiseError from '../../util/raiseError';
 
 const FILTER_DEBOUNCE_TIME = 500;
@@ -27,7 +27,7 @@ export default function LearningsPage() {
       <Await resolve={data.learningsPromise} errorElement={<ErrorView />}>
         {(response) =>
           isLearningListReponse(response) ? (
-            <LearningList learnings={response.learnings} totalLearningCount={response.totalCount} />
+            <LearningsView learnings={response.learnings} totalLearningCount={response.totalCount} />
           ) : (
             raiseError('invalid-loader-response', 'Received invalid object to render as a learning learning list')
           )
@@ -37,26 +37,22 @@ export default function LearningsPage() {
   );
 }
 
-type LearningListProps = {
-  learnings: Array<Pick<ILearning, 'id' | 'title' | 'createdAt'>>;
+type LearningsViewProps = {
+  learnings: Array<Pick<Learning, 'id' | 'title' | 'createdAt'>>;
   totalLearningCount: number;
 };
 
-function LearningList(props: LearningListProps) {
+function LearningsView(props: LearningsViewProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [titleFilter, setTitleFilter] = useState(searchParams.get('title') || '');
   const debouncedTitleFilter = useDebounce(titleFilter, FILTER_DEBOUNCE_TIME);
 
   const currentPage = +(searchParams.get('page') ?? 0);
   const totalPages = Math.ceil(props.totalLearningCount / PAGE_SIZE);
-  const paginationText = 'Page ' + (totalPages > 0 ? `${currentPage + 1} / ${totalPages}` : '0 of 0'); // "Page X of Y" or "Page 0 of 0". Counts for 0 based pagination.
-  const hasNextPage = (currentPage + 1) * PAGE_SIZE < props.totalLearningCount; // +1 to adjust for pagination starting from 0 in code.
-  const hasPreviousPage = currentPage > 0;
 
   const nextPage = () => {
     setSearchParams(
       (params) => {
-        const currentPage = +(params.get('page') ?? 0);
         const nextPage = Math.min(currentPage + 1, Math.floor(props.totalLearningCount / PAGE_SIZE));
         params.set('page', nextPage.toString());
         return params;
@@ -68,7 +64,6 @@ function LearningList(props: LearningListProps) {
   const previousPage = () => {
     setSearchParams(
       (params) => {
-        const currentPage = +(params.get('page') ?? 0);
         const previousPage = Math.max(currentPage - 1, 0);
         params.set('page', previousPage.toString());
         return params;
@@ -94,32 +89,85 @@ function LearningList(props: LearningListProps) {
 
   return (
     <>
-      <LearningListControls titleFilter={titleFilter} onTitleFilterChange={setTitleFilter} />
-      <ul className="mt-5">
-        {props.learnings.map((learning) => (
-          <li key={learning.id}>
-            <Link to={`/learnings/${learning.id}`}>
-              <article className="py-2 px-4 my-2 border-2 border-current rounded-md hover:bg-emerald-400">
-                <h2 className="font-bold">
-                  {withClassAddedToMatchingSections(learning.title, searchParams.get('title'), 'text-emerald-500')}
-                </h2>
-                <time className="text-sm" dateTime={learning.createdAt}>
-                  {learning.createdAt}
-                </time>
-              </article>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="flex gap-5 justify-center items-center">
-        <Button variant="secondary" onClick={previousPage} disabled={!hasPreviousPage}>
-          Previous
-        </Button>
-        <p className="font-bold">{paginationText}</p>
-        <Button variant="secondary" onClick={nextPage} disabled={!hasNextPage}>
-          Next
-        </Button>
+      <LearningListControlPanel titleFilter={titleFilter} onTitleFilterChange={setTitleFilter} />
+      <div className="bg-slate-100 my-5 rounded-md px-5">
+        <ListControls
+          nextPage={nextPage}
+          previousPage={previousPage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+        <LearningList learnings={props.learnings} />
+        <ListControls
+          nextPage={nextPage}
+          previousPage={previousPage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
       </div>
     </>
+  );
+}
+
+type ListControlsProps = {
+  previousPage: () => void;
+  nextPage: () => void;
+  totalPages: number;
+  currentPage: number;
+};
+
+function ListControls(props: ListControlsProps) {
+  const hasNextPage = props.currentPage < props.totalPages - 1; // -1 to account for 0 based pagination.
+  const hasPreviousPage = props.currentPage > 0;
+  const paginationText = props.totalPages > 0 ? `${props.currentPage + 1} / ${props.totalPages}` : '0 of 0';
+  return (
+    <div className="flex items-center py-3">
+      <Button variant="tertiary" className="text-left" onClick={props.previousPage} disabled={!hasPreviousPage}>
+        Previous page
+      </Button>
+      <p className="font-bold grow text-center text-xs md:text-md">
+        <span>Page</span>
+        <br />
+        {paginationText}
+      </p>
+      <Button variant="tertiary" className="text-right" onClick={props.nextPage} disabled={!hasNextPage}>
+        Next page
+      </Button>
+    </div>
+  );
+}
+
+type LearningListProps = {
+  learnings: Array<LearningListItem>;
+};
+
+function LearningList(props: LearningListProps) {
+  return (
+    <nav className="flex flex-col gap-2 md:gap-3">
+      {props.learnings.map((learning) => (
+        <LearningListTile key={learning.id} learning={learning} />
+      ))}
+    </nav>
+  );
+}
+
+type LearningListTileProps = {
+  learning: LearningListItem;
+};
+
+function LearningListTile({ learning }: LearningListTileProps) {
+  const [searchParams] = useSearchParams();
+
+  return (
+    <Link className="outline-offset-4" to={`/learnings/${learning.id}`}>
+      <article className="py-1 px-2 md:px-4 md:py-3 text-sm border-2 border-slate-300 rounded-md bg-white transition-all focus:bg-emerald-200 hover:bg-emerald-300 hover:border-slate-900">
+        <h2 className="font-bold">
+          {withClassAddedToMatchingSections(learning.title, searchParams.get('title'), 'text-emerald-500')}
+        </h2>
+        <time className="text-xs md:text-sm" dateTime={learning.createdAt}>
+          {learning.createdAt}
+        </time>
+      </article>
+    </Link>
   );
 }

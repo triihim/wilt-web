@@ -12,7 +12,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
   const { setModalContent } = useContext(ModalContext);
   return (
     <div className="flex flex-col gap-5">
-      <p>{props.prompt}</p>
+      <p autoFocus>{props.prompt}</p>
       <SubmitGroup
         onCancel={() => (props.onCancel ? props.onCancel() : setModalContent(null))}
         onSubmit={props.onConfirm}

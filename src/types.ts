@@ -1,4 +1,4 @@
-export interface ILearning {
+export interface Learning {
   id: number;
   title: string;
   description: string;

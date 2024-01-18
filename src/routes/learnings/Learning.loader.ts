@@ -1,10 +1,10 @@
 import { defer } from 'react-router-dom';
 import { getLearning } from '../../api/real';
-import { ILearning } from '../../types';
+import { Learning } from '../../types';
 import raiseError from '../../util/raiseError';
 
 export type LoaderResponse = {
-  learningPromise: Promise<ILearning | undefined>;
+  learningPromise: Promise<Learning | undefined>;
 };
 
 export default async function loader({ params }: { params: { learningId?: string } }) {
