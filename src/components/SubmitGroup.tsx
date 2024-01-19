@@ -1,4 +1,4 @@
-import Button from './Button';
+import { Button } from './Button';
 
 type SubmitGroupProps = {
   submitText?: string;
@@ -8,7 +8,7 @@ type SubmitGroupProps = {
   errors?: string[];
 };
 
-export default function SubmitGroup(props: SubmitGroupProps) {
+export function SubmitGroup(props: SubmitGroupProps) {
   return (
     <div className="flex justify-between gap-5">
       <div>

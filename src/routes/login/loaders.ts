@@ -1,7 +1,7 @@
 import { redirect } from 'react-router-dom';
 import ClientStorage from '../../clientStorage';
 
-export default function loader() {
+export function loginLoader() {
   const alreadyExistingAccessToken = ClientStorage.getAccessToken();
   if (alreadyExistingAccessToken) {
     return redirect('/');

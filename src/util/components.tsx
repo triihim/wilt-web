@@ -1,3 +1,6 @@
+import { useRef, useState, useEffect, PropsWithChildren } from 'react';
+import { CenteredLoadingIndicator } from '../components/LoadingIndicator';
+
 export const withClassAddedToMatchingSections = (
   text: string | null,
   search: string | null,
@@ -17,4 +20,25 @@ export const withClassAddedToMatchingSections = (
       part
     ),
   );
+};
+
+type InitializerProps = PropsWithChildren & {
+  initFunctions: Array<(() => Promise<void>) | (() => void)>;
+};
+
+export const Initializer = (props: InitializerProps) => {
+  const initialized = useRef(false);
+  const [loading, setLoading] = useState(true);
+
+  const initialize = async () => {
+    if (initialized.current) return;
+    await Promise.all(props.initFunctions.map((f) => f()));
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    initialize();
+  }, []);
+
+  return loading ? <CenteredLoadingIndicator /> : props.children;
 };

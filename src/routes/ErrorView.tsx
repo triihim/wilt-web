@@ -1,8 +1,8 @@
 import { Navigate, useRouteError } from 'react-router-dom';
-import AppError from '../error';
 import clientStorage from '../clientStorage';
+import { AppError } from '../error';
 
-export default function ErrorView() {
+export function ErrorView() {
   const error = useRouteError();
 
   if (error instanceof AppError) {

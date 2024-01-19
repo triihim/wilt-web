@@ -1,10 +1,10 @@
 import { Form, useActionData, useNavigation } from 'react-router-dom';
-import Input from '../../components/forms/Input';
-import Button from '../../components/Button';
-import { LoginActionResponse } from './Login.action';
+import { Input } from '../../components/forms/Input';
+import { Button } from '../../components/Button';
+import { LoginActionResponse } from './actions';
 import { CenteredLoadingIndicator } from '../../components/LoadingIndicator';
 
-export default function Login() {
+export function LoginPage() {
   const navigation = useNavigation();
   const actionData = useActionData() as LoginActionResponse | undefined;
 

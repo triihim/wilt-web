@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, defer } from 'react-router-dom';
 import { getLearningsPage } from '../../../api/real';
 import { ILearning } from '../../../types';
-import queryClient from '../../../queryClient';
+import { queryClient } from '../../../queryClient';
 
 export type LearningListItem = Pick<ILearning, 'id' | 'title' | 'createdAt'>;
 
@@ -16,7 +16,7 @@ export type LoaderResponse = {
 
 export const PAGE_SIZE = 10;
 
-export default async function loader(args: LoaderFunctionArgs) {
+export async function listPageLoader(args: LoaderFunctionArgs) {
   const searchParams = new URL(args.request.url).searchParams;
 
   const page = +(searchParams.get('page') ?? 0);

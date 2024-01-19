@@ -1,12 +1,12 @@
 import { useContext, useEffect } from 'react';
-import Button from '../../../../components/Button';
+import { useNavigate, useFetcher } from 'react-router-dom';
+import { Button } from '../../../../components/Button';
+import { ControlPanel } from '../../../../components/ControlPanel';
+import { SubmitGroup } from '../../../../components/SubmitGroup';
+import { Input } from '../../../../components/forms/Input';
+import { TextArea } from '../../../../components/forms/TextArea';
 import { ModalContext } from '../../../../components/modal/ModalContext';
-import Input from '../../../../components/forms/Input';
-import TextArea from '../../../../components/forms/TextArea';
-import ControlPanel from '../../../../components/ControlPanel';
-import { useFetcher, useNavigate } from 'react-router-dom';
-import { FetcherData, ILearning } from '../../../../types';
-import SubmitGroup from '../../../../components/SubmitGroup';
+import { ILearning, FetcherData } from '../../../../types';
 
 type LearningControlsProps = {
   titleFilter: string;
@@ -14,7 +14,7 @@ type LearningControlsProps = {
   highlightAddLearningButton?: boolean;
 };
 
-export default function LearningListControlPanel(props: LearningControlsProps) {
+export function LearningListControlPanel(props: LearningControlsProps) {
   const { setModalContent } = useContext(ModalContext);
   const navigate = useNavigate();
 

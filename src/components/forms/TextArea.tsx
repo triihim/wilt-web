@@ -4,7 +4,7 @@ type TextAreaProps = ComponentProps<'textarea'> & {
   label?: string;
 };
 
-export default function TextArea(props: TextAreaProps) {
+export function TextArea(props: TextAreaProps) {
   return (
     <div>
       {props.label && <label>{props.label}</label>}

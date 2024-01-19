@@ -1,9 +1,9 @@
 import { ActionFunctionArgs } from 'react-router-dom';
 import { createLearning, deleteLearning } from '../../../api/real';
 import { FetcherData, ILearning } from '../../../types';
-import raiseError from '../../../util/raiseError';
-import AppError from '../../../error';
-import queryClient from '../../../queryClient';
+import { AppError } from '../../../error';
+import { queryClient } from '../../../queryClient';
+import { raiseError } from '../../../util/raiseError';
 
 const CONSTRAINTS = {
   title: {

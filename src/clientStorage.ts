@@ -25,9 +25,4 @@ function setRefreshToken(refreshToken: string | null) {
   }
 }
 
-export default {
-  getAccessToken,
-  setAccessToken,
-  getRefreshToken,
-  setRefreshToken,
-};
+export default { getAccessToken, setAccessToken, getRefreshToken, setRefreshToken };

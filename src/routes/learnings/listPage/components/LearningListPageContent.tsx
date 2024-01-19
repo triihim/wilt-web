@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import useDebounce from '../../../../hooks/useDebounce';
+import { useDebounce } from '../../../../hooks/useDebounce';
 import { LearningListItem, PAGE_SIZE } from '../loaders';
-import LearningListControlPanel from './LearningListControlPanel';
+import { LearningListControlPanel } from './LearningListControlPanel';
 import { PaginationControls } from '../../../../components/PaginationControls';
-import LearningList from './LearningList';
+import { LearningList } from './LearningList';
 
 type LearningListPageContentProps = {
   learnings: Array<LearningListItem>;
@@ -13,7 +13,7 @@ type LearningListPageContentProps = {
 
 const FILTER_DEBOUNCE_TIME = 500;
 
-export default function LearningListPageContent(props: LearningListPageContentProps) {
+export function LearningListPageContent(props: LearningListPageContentProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [titleFilter, setTitleFilter] = useState(searchParams.get('title') || '');
   const debouncedTitleFilter = useDebounce(titleFilter, FILTER_DEBOUNCE_TIME);

@@ -1,17 +1,17 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate, useFetcher } from 'react-router-dom';
 import { CenteredLoadingIndicator } from '../../../../components/LoadingIndicator';
-import ConfirmModal from '../../../../components/modal/ConfirmModal';
 import { ModalContext } from '../../../../components/modal/ModalContext';
 import { ILearning, FetcherData } from '../../../../types';
-import Controls from './LearningDetailsControlPanel';
-import LearningDetails from './LearningDetails';
+import { ConfirmModal } from '../../../../components/modal/ConfirmModal';
+import { LearningDetails } from './LearningDetails';
+import { LearningDetailsControlPanel } from './LearningDetailsControlPanel';
 
 type LearningDetailsPageContentProps = {
   learning: ILearning;
 };
 
-export default function LearningDetailsPageContent(props: LearningDetailsPageContentProps) {
+export function LearningDetailsPageContent(props: LearningDetailsPageContentProps) {
   const navigate = useNavigate();
   const { setModalContent } = useContext(ModalContext);
   const fetcher = useFetcher<FetcherData>();
@@ -35,7 +35,7 @@ export default function LearningDetailsPageContent(props: LearningDetailsPageCon
 
   return (
     <>
-      <Controls
+      <LearningDetailsControlPanel
         onDelete={() => setModalContent(<ConfirmModal prompt="Confirm delete" onConfirm={initiateLearningDeletion} />)}
         onReturn={() => navigate(-1)}
       />

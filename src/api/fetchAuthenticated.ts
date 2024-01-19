@@ -1,5 +1,5 @@
 import clientStorage from '../clientStorage';
-import AppError from '../error';
+import { AppError } from '../error';
 
 export type FetchParameters = Parameters<typeof fetch>;
 export type FetchReturnType = ReturnType<typeof fetch>;
@@ -45,7 +45,7 @@ const handleFailedFetch = (response: Response) => {
 };
 
 // TODO: Timeout
-export default async function fetchAuthenticated(url: FetchParameters[0], init?: FetchParameters[1]): FetchReturnType {
+export async function fetchAuthenticated(url: FetchParameters[0], init?: FetchParameters[1]): FetchReturnType {
   let response = await fetch(url, withAuthToken(init));
 
   if (response.status === 403 && clientStorage.getRefreshToken() !== null) {

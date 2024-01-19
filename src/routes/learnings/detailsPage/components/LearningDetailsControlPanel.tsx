@@ -1,12 +1,12 @@
-import Button from '../../../../components/Button';
-import ControlPanel from '../../../../components/ControlPanel';
+import { Button } from '../../../../components/Button';
+import { ControlPanel } from '../../../../components/ControlPanel';
 
 type LearningDetailsControlPanelProps = {
   onReturn(): void;
   onDelete(): void;
 };
 
-export default function LearningDetailsControlPanel(props: LearningDetailsControlPanelProps) {
+export function LearningDetailsControlPanel(props: LearningDetailsControlPanelProps) {
   return (
     <ControlPanel alwaysSingleRow>
       <ControlPanel.ControlGroup>

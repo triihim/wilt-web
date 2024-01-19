@@ -4,7 +4,7 @@ type ControlPanelProps = PropsWithChildren & {
   alwaysSingleRow?: boolean;
 };
 
-export default function ControlPanel(props: ControlPanelProps) {
+export function ControlPanel(props: ControlPanelProps) {
   return (
     <div
       className={`flex justify-between gap-3 p-3 md:gap-5 md:p-5 items-center bg-slate-100  rounded-md ${

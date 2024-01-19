@@ -1,12 +1,12 @@
 import { Await } from 'react-router-dom';
 import { ValidatorFunction } from '../../../util/validators';
-import useAssertedLoaderData from '../../../hooks/useAssertedLoaderData';
 import { LearningListResponse, LoaderResponse } from './loaders';
 import { Suspense } from 'react';
 import { CenteredLoadingIndicator } from '../../../components/LoadingIndicator';
-import ErrorView from '../../ErrorView';
-import raiseError from '../../../util/raiseError';
-import LearningListPageContent from './components/LearningListPageContent';
+import { useAssertedLoaderData } from '../../../hooks/useAssertedLoaderData';
+import { raiseError } from '../../../util/raiseError';
+import { ErrorView } from '../../ErrorView';
+import { LearningListPageContent } from './components/LearningListPageContent';
 
 const loaderDataValidator: ValidatorFunction = (data) =>
   !!data && typeof data === 'object' && 'learningsPromise' in data;
@@ -14,7 +14,7 @@ const loaderDataValidator: ValidatorFunction = (data) =>
 const isLearningListReponse = (obj: unknown): obj is LearningListResponse =>
   !!obj && typeof obj === 'object' && 'learnings' in obj && 'totalCount' in obj;
 
-export default function LearningListPage() {
+export function LearningListPage() {
   const data = useAssertedLoaderData<LoaderResponse>(loaderDataValidator);
   return (
     <Suspense fallback={<CenteredLoadingIndicator />}>

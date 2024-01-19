@@ -8,7 +8,7 @@ export type AppErrorType =
   | 'invalid-action-response'
   | 'unspecified';
 
-export default class AppError extends Error {
+export class AppError extends Error {
   readonly #type: AppErrorType;
   readonly #messages?: Array<string>;
 

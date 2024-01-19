@@ -29,7 +29,7 @@ type ButtonProps = ComponentProps<'button'> & {
   variant: ButtonVariant;
 };
 
-export default function Button(props: ButtonProps) {
+export function Button(props: ButtonProps) {
   return (
     <button {...props} className={`${buttonStyles.common} ${buttonStyles[props.variant]} ${props.className}`}></button>
   );

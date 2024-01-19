@@ -1,6 +1,6 @@
 import { ActionFunctionArgs } from 'react-router-dom';
-import raiseError from '../../util/raiseError';
 import { login } from '../../api/real';
+import { raiseError } from '../../util/raiseError';
 import clientStorage from '../../clientStorage';
 
 export type LoginActionResponse =
@@ -12,7 +12,7 @@ export type LoginActionResponse =
       message: string;
     };
 
-export default async function action({ request }: ActionFunctionArgs) {
+export async function loginAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   try {
     const email = (formData.get('email') as string) ?? raiseError('invalid-user-input', 'Email missing from form data');

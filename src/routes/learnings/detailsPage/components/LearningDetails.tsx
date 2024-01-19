@@ -4,7 +4,7 @@ type LearningDetailsProps = {
   learning: ILearning;
 };
 
-export default function LearningDetails({ learning }: LearningDetailsProps) {
+export function LearningDetails({ learning }: LearningDetailsProps) {
   return (
     <article className="fade-in">
       <h2 className="font-bold text-2xl mt-4">{learning.title}</h2>

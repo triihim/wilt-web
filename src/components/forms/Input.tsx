@@ -5,7 +5,7 @@ type InputProps = ComponentProps<'input'> & {
   inlineLabel?: boolean;
 };
 
-export default function Input(props: InputProps) {
+export function Input(props: InputProps) {
   const { inlineLabel, label, className, ...rest } = props;
 
   if (label && inlineLabel) {

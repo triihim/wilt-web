@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ModalContext } from './ModalContext';
-import SubmitGroup from '../SubmitGroup';
+import { SubmitGroup } from '../SubmitGroup';
 
 type ConfirmModalProps = {
   prompt: string;
@@ -8,7 +8,7 @@ type ConfirmModalProps = {
   onCancel?(): void;
 };
 
-export default function ConfirmModal(props: ConfirmModalProps) {
+export function ConfirmModal(props: ConfirmModalProps) {
   const { setModalContent } = useContext(ModalContext);
   return (
     <div className="flex flex-col gap-5">

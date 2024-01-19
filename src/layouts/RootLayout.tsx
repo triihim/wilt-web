@@ -1,28 +1,30 @@
 import { Form, NavLink, NavLinkProps, Outlet, useLocation, useNavigation } from 'react-router-dom';
-import { ModalContextProvider } from '../components/modal/ModalContext';
 import { LoadingIndicator } from '../components/LoadingIndicator';
-import Button from '../components/Button';
+import { Button } from '../components/Button';
+import { useLocalization } from '../hooks/useLocalization';
 
 export function RootLayout() {
   const { pathname } = useLocation();
   const atLoginPage = pathname.indexOf('/login') !== -1;
   return (
     <main className="w-11/12 lg:w-3/4 m-auto font-nunito transition-[width] duration-500">
-      <ModalContextProvider>
-        {!atLoginPage && <MainHeader />}
-        <Outlet />
-      </ModalContextProvider>
+      {!atLoginPage && <MainHeader />}
+      <Outlet />
     </main>
   );
 }
 
 function MainHeader() {
   const navigation = useNavigation();
+  const { isLoading: localizationChangePending } = useLocalization();
+
+  const showLoader = navigation.state === 'loading' || localizationChangePending;
+
   return (
     <header className="flex items-center justify-between py-5">
       <div className="flex items-center gap-4">
         <h1 className="text-3xl md:text-4xl font-bold align-bottom">wilt</h1>
-        {navigation.state === 'loading' && <LoadingIndicator />}
+        {showLoader && <LoadingIndicator />}
       </div>
       <MainMenuNavigation />
     </header>
