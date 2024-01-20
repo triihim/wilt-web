@@ -1,8 +1,53 @@
 {
-  "helloMessage": "Terve!",
   "locales": {
     "fi": "Suomi",
     "en": "English",
     "sv": "Svenska"
+  },
+  "common": {
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "return": "Palaa",
+    "delete": "Poista",
+    "confirm": "Vahvista",
+    "createdAt": "Luotu",
+    "updatedAt": "Päivitetty"
+  },
+  "error": {
+    "general": "Jotain meni pieleen"
+  },
+  "nav": {
+    "learnings": "Opit",
+    "logout": "Kirjaudu ulos"
+  },
+  "pagination": {
+    "page": "Sivu",
+    "next": "Seuraava",
+    "previous": "Edellinen",
+    "nextPage": "Seuraava sivu",
+    "previousPage": "Edellinen sivu"
+  },
+  "loginPage": {
+    "login": "Kirjaudu sisään",
+    "email": "Sähköpostiosoite",
+    "password": "Salasana",
+    "error": {
+      "loginFailed": "Sisäänkirjautuminen epäonnistui"
+    }
+  },
+  "learningListPage": {
+    "searchByTitle": "Hae otsikolla",
+    "addLearning": "Lisää oppi"
+  },
+  "learningModal": {
+    "title": "Otsikko",
+    "description": "Kuvaus",
+    "validationError": {
+      "title": "Otsikon tulee olla {{minLength}}-{{maxLength}} merkkiä pitkä",
+      "description": "Kuvauksen tulee olla {{minLength}}-{{maxLength}} merkkiä pitkä"
+    }
+  },
+  "learningDetailsPage": {
+    "confirmDelete": "Vahvista, että haluat poistaa opin"
   }
 }

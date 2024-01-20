@@ -1,6 +1,7 @@
 import { Navigate, useRouteError } from 'react-router-dom';
 import clientStorage from '../clientStorage';
 import { AppError } from '../error';
+import { useLocalization } from '../hooks/useLocalization';
 
 export function ErrorView() {
   const error = useRouteError();
@@ -14,22 +15,19 @@ export function ErrorView() {
       case 'not-found':
         return <Navigate to={'/'} />;
       default:
-        return <ErrorList messages={error.messages} />;
+        break;
     }
   }
 
   return <ErrorList />;
 }
 
-type ErrorListProps = {
-  messages?: Array<string>;
-};
-
-function ErrorList(props: ErrorListProps) {
+// TODO: More detailed error messages with localization.
+function ErrorList() {
+  const { t } = useLocalization();
   return (
     <div className="flex flex-col justify-center items-center">
-      <h2 className="text-2xl font-bold py-5">Something went wrong &#128533;</h2>
-      <ul>{props.messages?.map((message, index) => <li key={'error' + index}>{message}</li>)}</ul>
+      <h2 className="text-2xl font-bold py-5">{t('error.general')} &#128533;</h2>
     </div>
   );
 }

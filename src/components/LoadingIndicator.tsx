@@ -4,7 +4,7 @@ export function LoadingIndicator() {
 
 export function CenteredLoadingIndicator() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center items-center grow">
       <LoadingIndicator />
     </div>
   );

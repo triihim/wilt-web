@@ -32,6 +32,6 @@ export async function loginAction({ request }: ActionFunctionArgs) {
       raiseError('invalid-loader-response', 'Received invalid login response');
     }
   } catch (error: unknown) {
-    return { status: 'error', message: 'Login failed' };
+    return { status: 'error' };
   }
 }

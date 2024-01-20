@@ -5,6 +5,7 @@ import { LearningListItem, PAGE_SIZE } from '../loaders';
 import { LearningListControlPanel } from './LearningListControlPanel';
 import { PaginationControls } from '../../../../components/PaginationControls';
 import { LearningList } from './LearningList';
+import { useTranslation } from 'react-i18next';
 
 type LearningListPageContentProps = {
   learnings: Array<LearningListItem>;
@@ -88,9 +89,10 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
 }
 
 function EmptyListMessage() {
+  const { t } = useTranslation();
   return (
     <h2 className="text-center text-xl font-semibold py-10">
-      Hello! Start tracking your progress by adding your first learning <span className="text-2xl">&#129299;</span>
+      {t('learningListPage.emptyListMessage')} <span className="text-2xl">&#129299;</span>
     </h2>
   );
 }

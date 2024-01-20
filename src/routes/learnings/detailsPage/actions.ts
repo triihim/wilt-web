@@ -4,6 +4,7 @@ import { FetcherData, ILearning } from '../../../types';
 import { AppError } from '../../../error';
 import { queryClient } from '../../../queryClient';
 import { raiseError } from '../../../util/raiseError';
+import i18n from 'i18next';
 
 const CONSTRAINTS = {
   title: {
@@ -38,7 +39,10 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
 
     if (title.length < CONSTRAINTS.title.length.min || title.length > CONSTRAINTS.title.length.max) {
       validationErrors.push(
-        `Title should have ${CONSTRAINTS.title.length.min}-${CONSTRAINTS.title.length.max} characters`,
+        i18n.t('learningModal.validationError.title', {
+          minLength: CONSTRAINTS.title.length.min,
+          maxLength: CONSTRAINTS.title.length.max,
+        }),
       );
     }
 
@@ -47,7 +51,10 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
       description.length > CONSTRAINTS.description.length.max
     ) {
       validationErrors.push(
-        `Description should have ${CONSTRAINTS.description.length.min}-${CONSTRAINTS.description.length.max} characters`,
+        i18n.t('learningModal.validationError.description', {
+          minLength: CONSTRAINTS.description.length.min,
+          maxLength: CONSTRAINTS.description.length.max,
+        }),
       );
     }
 

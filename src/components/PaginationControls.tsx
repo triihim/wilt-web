@@ -1,3 +1,4 @@
+import { useLocalization } from '../hooks/useLocalization';
 import { Button } from './Button';
 
 type ListControlsProps = {
@@ -8,6 +9,7 @@ type ListControlsProps = {
 };
 
 export function PaginationControls(props: ListControlsProps) {
+  const { t } = useLocalization();
   const hasNextPage = props.currentPage < props.totalPages - 1; // -1 to account for 0 based pagination.
   const hasPreviousPage = props.currentPage > 0;
   const paginationText = props.totalPages > 0 ? `${props.currentPage + 1} / ${props.totalPages}` : '0 of 0';
@@ -15,19 +17,19 @@ export function PaginationControls(props: ListControlsProps) {
     <div className="flex items-center">
       <div className="w-1/3">
         <Button variant="tertiary" onClick={props.previousPage} disabled={!hasPreviousPage}>
-          <span className="md:hidden">Previous</span>
-          <span className="hidden md:inline">Previous page</span>
+          <span className="md:hidden">{t('pagination.previous')}</span>
+          <span className="hidden md:inline">{t('pagination.previousPage')}</span>
         </Button>
       </div>
       <p className="font-bold grow text-center text-xs md:text-md">
-        <span>Page</span>
+        <span>{t('pagination.page')}</span>
         <br />
         {paginationText}
       </p>
       <div className="w-1/3 text-right">
         <Button variant="tertiary" onClick={props.nextPage} disabled={!hasNextPage}>
-          <span className="md:hidden">Next</span>
-          <span className="hidden md:inline">Next page</span>
+          <span className="md:hidden">{t('pagination.next')}</span>
+          <span className="hidden md:inline">{t('pagination.nextPage')}</span>
         </Button>
       </div>
     </div>

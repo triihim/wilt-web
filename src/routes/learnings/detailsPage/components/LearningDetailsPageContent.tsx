@@ -6,6 +6,7 @@ import { ILearning, FetcherData } from '../../../../types';
 import { ConfirmModal } from '../../../../components/modal/ConfirmModal';
 import { LearningDetails } from './LearningDetails';
 import { LearningDetailsControlPanel } from './LearningDetailsControlPanel';
+import { useLocalization } from '../../../../hooks/useLocalization';
 
 type LearningDetailsPageContentProps = {
   learning: ILearning;
@@ -15,6 +16,7 @@ export function LearningDetailsPageContent(props: LearningDetailsPageContentProp
   const navigate = useNavigate();
   const { setModalContent } = useContext(ModalContext);
   const fetcher = useFetcher<FetcherData>();
+  const { t } = useLocalization();
 
   const initiateLearningDeletion = () => {
     fetcher.submit(null, {
@@ -33,10 +35,12 @@ export function LearningDetailsPageContent(props: LearningDetailsPageContentProp
 
   if (fetcher.state === 'submitting') return <CenteredLoadingIndicator />;
 
+  const promptText = `${t('learningDetailsPage.confirmDelete')}: ${props.learning.title}`;
+
   return (
     <>
       <LearningDetailsControlPanel
-        onDelete={() => setModalContent(<ConfirmModal prompt="Confirm delete" onConfirm={initiateLearningDeletion} />)}
+        onDelete={() => setModalContent(<ConfirmModal prompt={promptText} onConfirm={initiateLearningDeletion} />)}
         onReturn={() => navigate(-1)}
       />
       <div className="grow my-5 pr-5 overflow-y-auto">

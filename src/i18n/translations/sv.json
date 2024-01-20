@@ -1,8 +1,54 @@
 {
-  "helloMessage": "Hej!",
   "locales": {
     "fi": "Suomi",
     "en": "English",
     "sv": "Svenska"
+  },
+  "common": {
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "return": "Återvända",
+    "delete": "Radera",
+    "confirm": "Bekräfta",
+    "createdAt": "Skapad",
+    "updatedAt": "Uppdaterad"
+  },
+  "error": {
+    "general": "Något gick fel"
+  },
+  "nav": {
+    "learnings": "Inlärningar",
+    "logout": "Logga ut"
+  },
+  "pagination": {
+    "page": "Sida",
+    "next": "Nästa",
+    "previous": "Föregående",
+    "nextPage": "Nästa sida",
+    "previousPage": "Föregående sida"
+  },
+  "loginPage": {
+    "login": "Logga in",
+    "email": "E-postadress",
+    "password": "Lösenord",
+    "error": {
+      "loginFailed": "Inloggningen misslyckades"
+    }
+  },
+  "learningListPage": {
+    "emptyListMessage": "Hej! Börja spåra din framsteg genom att lägga till din första inlärning",
+    "searchByTitle": "Sök efter titel",
+    "addLearning": "Lägg till inlärning"
+  },
+  "learningModal": {
+    "title": "Titel",
+    "description": "Beskrivning",
+    "validationError": {
+      "title": "Titeln bör ha {{minLength}}-{{maxLength}} tecken",
+      "description": "Beskrivningen bör ha {{minLength}}-{{maxLength}} tecken"
+    }
+  },
+  "learningDetailsPage": {
+    "confirmDelete": "Bekräfta radering av inlärning"
   }
 }

@@ -7,6 +7,7 @@ import { Input } from '../../../../components/forms/Input';
 import { TextArea } from '../../../../components/forms/TextArea';
 import { ModalContext } from '../../../../components/modal/ModalContext';
 import { ILearning, FetcherData } from '../../../../types';
+import { useLocalization } from '../../../../hooks/useLocalization';
 
 type LearningControlsProps = {
   titleFilter: string;
@@ -17,6 +18,7 @@ type LearningControlsProps = {
 export function LearningListControlPanel(props: LearningControlsProps) {
   const { setModalContent } = useContext(ModalContext);
   const navigate = useNavigate();
+  const { t } = useLocalization();
 
   const openLearningCreationModal = () => {
     setModalContent(
@@ -38,12 +40,12 @@ export function LearningListControlPanel(props: LearningControlsProps) {
           className={`w-full md:w-fit ${props.highlightAddLearningButton ? 'md:animate-bounce' : ''}`}
           onClick={openLearningCreationModal}
         >
-          Add learning
+          {t('learningListPage.addLearning')}
         </Button>
       </ControlPanel.ControlGroup>
       <ControlPanel.ControlGroup>
         <Input
-          placeholder="Search by title"
+          placeholder={t('learningListPage.searchByTitle')}
           value={props.titleFilter}
           onChange={(e) => props.onTitleFilterChange(e.target.value)}
         />
@@ -59,6 +61,7 @@ type LearningCreationFormProps = {
 
 function LearningCreationForm(props: LearningCreationFormProps) {
   const fetcher = useFetcher<FetcherData>();
+  const { t } = useLocalization();
 
   const isSubmitting = fetcher.state === 'submitting';
 
@@ -72,8 +75,15 @@ function LearningCreationForm(props: LearningCreationFormProps) {
   return (
     <div className="flex flex-col gap-10">
       <fetcher.Form className="flex flex-col gap-5" method="post" action="/learnings/new">
-        <Input autoFocus name="title" label="Title" disabled={isSubmitting} />
-        <TextArea name="description" label="Description" disabled={isSubmitting} rows={5} maxLength={2000} />
+        <Input autoFocus name="title" label={t('learningModal.title')} disabled={isSubmitting} />
+        <TextArea
+          name="description"
+          label={t('learningModal.description')}
+          disabled={isSubmitting}
+          rows={5}
+          maxLength={2000}
+          className="resize-none"
+        />
         <SubmitGroup
           errors={fetcher.data?.status === 'error' ? fetcher.data.messages : []}
           disabled={isSubmitting}

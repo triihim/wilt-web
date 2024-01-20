@@ -1,8 +1,54 @@
 {
-  "helloMessage": "Hello!",
   "locales": {
     "fi": "Suomi",
     "en": "English",
     "sv": "Svenska"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "return": "Return",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "createdAt": "Created at",
+    "updatedAt": "Updated at"
+  },
+  "error": {
+    "general": "Something went wrong"
+  },
+  "nav": {
+    "learnings": "Learnings",
+    "logout": "Logout"
+  },
+  "pagination": {
+    "page": "Page",
+    "next": "Next",
+    "previous": "Previous",
+    "nextPage": "Next page",
+    "previousPage": "Previous page"
+  },
+  "loginPage": {
+    "login": "Login",
+    "email": "Email address",
+    "password": "Password",
+    "error": {
+      "loginFailed": "Login failed"
+    }
+  },
+  "learningListPage": {
+    "emptyListMessage": "Hello! Start tracking your progress by adding your first learning",
+    "searchByTitle": "Search by title",
+    "addLearning": "Add learning"
+  },
+  "learningModal": {
+    "title": "Title",
+    "description": "Description",
+    "validationError": {
+      "title": "Title should have {{minLength}}-{{maxLength}} characters",
+      "description": "Description should have {{minLength}}-{{maxLength}} characters"
+    }
+  },
+  "learningDetailsPage": {
+    "confirmDelete": "Confirm deletion of learning"
   }
 }

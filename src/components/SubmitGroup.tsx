@@ -1,3 +1,4 @@
+import { useLocalization } from '../hooks/useLocalization';
 import { Button } from './Button';
 
 type SubmitGroupProps = {
@@ -9,6 +10,7 @@ type SubmitGroupProps = {
 };
 
 export function SubmitGroup(props: SubmitGroupProps) {
+  const { t } = useLocalization();
   return (
     <div className="flex justify-between gap-5">
       <div>
@@ -20,10 +22,10 @@ export function SubmitGroup(props: SubmitGroupProps) {
       </div>
       <div className="flex gap-5 justify-end">
         <Button variant="secondary" type="button" disabled={props.disabled} onClick={props.onCancel}>
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button variant="primary" type="submit" disabled={props.disabled} onClick={props.onSubmit}>
-          {props.submitText || 'Submit'}
+          {props.submitText || t('common.save')}
         </Button>
       </div>
     </div>

@@ -41,15 +41,16 @@ function MainHeader() {
 }
 
 function MainMenuNavigation() {
+  const { t } = useLocalization();
   return (
     <nav className="flex items-center justify-center gap-5 md:gap-10">
       <ul className="font-bold">
         <li>
-          <MainHeaderNavLink to={'/learnings'}>Learnings</MainHeaderNavLink>
+          <MainHeaderNavLink to={'/learnings'}>{t('nav.learnings')}</MainHeaderNavLink>
         </li>
       </ul>
       <Form method="post" action="/logout">
-        <Button variant="secondary">Logout</Button>
+        <Button variant="secondary">{t('nav.logout')}</Button>
       </Form>
     </nav>
   );
