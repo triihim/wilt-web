@@ -3,6 +3,9 @@ import { LoadingIndicator } from '../components/LoadingIndicator';
 import { Button } from '../components/Button';
 import { useLocalization } from '../hooks/useLocalization';
 import { ModalContextProvider } from '../components/modal/ModalContext';
+import { GrLanguage } from 'react-icons/gr';
+import { useEffect, useState } from 'react';
+import { Locale, supportedLocales } from '../i18n/config';
 
 export function RootLayout() {
   const { pathname } = useLocation();
@@ -63,5 +66,62 @@ function MainHeaderNavLink(props: NavLinkProps) {
 }
 
 function Footer() {
-  return <footer className="p-3 rounded-t-md md:rounded-md md:p-5 bg-slate-100"></footer>;
+  return (
+    <footer className="p-3 rounded-t-md md:rounded-md md:p-5 bg-slate-100">
+      <LocaleSelector />
+    </footer>
+  );
+}
+
+// TODO: Extract dropdown menu stuff to its own component.
+function LocaleSelector() {
+  const { currentLocale, setLocale, t } = useLocalization();
+  const [open, setOpen] = useState(false);
+
+  const selectLocale = (locale: Locale) => {
+    setLocale(locale);
+    setOpen(false);
+  };
+
+  const openSelector = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpen(true);
+  };
+
+  useEffect(() => {
+    const closeMenuClick = () => {
+      setOpen(false);
+    };
+
+    if (open) {
+      document.addEventListener('click', closeMenuClick);
+    }
+    return () => document.removeEventListener('click', closeMenuClick);
+  }, [open]);
+
+  return (
+    <div className="relative" onKeyDown={(e) => e.code.toLowerCase() === 'escape' && setOpen(false)}>
+      <Button variant="tertiary" onClick={openSelector}>
+        <span className="flex items-center gap-2 align-bottom">
+          <GrLanguage size={20} />
+          {t(`locales.${currentLocale}`)}
+        </span>
+      </Button>
+      {open && (
+        <ul className="border-2 border-slate-300 absolute bottom-full left-0 bg-slate-100 rounded-md">
+          {supportedLocales.map((locale) => (
+            <li
+              tabIndex={0}
+              className="px-5 py-3 hover:bg-emerald-300 cursor-pointer font-semibold"
+              key={locale}
+              onClick={() => selectLocale(locale)}
+              onKeyDown={(e) => ['enter', 'space'].includes(e.code.toLowerCase()) && selectLocale(locale)}
+            >
+              {t(`locales.${locale}`)}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }

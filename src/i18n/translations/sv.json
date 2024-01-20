@@ -1,3 +1,8 @@
 {
-  "helloMessage": "Hej!"
+  "helloMessage": "Hej!",
+  "locales": {
+    "fi": "Suomi",
+    "en": "English",
+    "sv": "Svenska"
+  }
 }

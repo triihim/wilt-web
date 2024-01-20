@@ -1,3 +1,8 @@
 {
-  "helloMessage": "Terve!"
+  "helloMessage": "Terve!",
+  "locales": {
+    "fi": "Suomi",
+    "en": "English",
+    "sv": "Svenska"
+  }
 }
