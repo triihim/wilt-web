@@ -6,8 +6,8 @@ type LearningDetailsProps = {
 
 export function LearningDetails({ learning }: LearningDetailsProps) {
   return (
-    <article className="fade-in">
-      <h2 className="font-bold text-2xl mt-4">{learning.title}</h2>
+    <article className="fade-in break-words">
+      <h2 className="font-bold text-2xl">{learning.title}</h2>
       <p className="text-sm">
         Created: <time>{learning.createdAt}</time>
       </p>

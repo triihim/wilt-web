@@ -66,20 +66,22 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
         onTitleFilterChange={setTitleFilter}
         highlightAddLearningButton={isLearningListEmpty}
       />
-      <div className="bg-slate-100 my-5 rounded-md p-5">
+      <div className="bg-slate-100 mt-5 rounded-md p-5 grow overflow-y-auto">
         {isLearningListEmpty ? (
           <EmptyListMessage />
         ) : (
           <>
             <LearningList learnings={props.learnings} />
-            <PaginationControls
-              nextPage={nextPage}
-              previousPage={previousPage}
-              totalPages={totalPages}
-              currentPage={currentPage}
-            />
           </>
         )}
+      </div>
+      <div className="bg-slate-100 p-2 rounded-b-md border-t-2 border-slate-300">
+        <PaginationControls
+          nextPage={nextPage}
+          previousPage={previousPage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
       </div>
     </>
   );

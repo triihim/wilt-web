@@ -39,7 +39,9 @@ export function LearningDetailsPageContent(props: LearningDetailsPageContentProp
         onDelete={() => setModalContent(<ConfirmModal prompt="Confirm delete" onConfirm={initiateLearningDeletion} />)}
         onReturn={() => navigate(-1)}
       />
-      <LearningDetails learning={props.learning} />
+      <div className="grow my-5 pr-5 overflow-y-auto">
+        <LearningDetails learning={props.learning} />
+      </div>
     </>
   );
 }
