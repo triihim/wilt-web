@@ -36,6 +36,7 @@
     }
   },
   "learningListPage": {
+    "emptyListMessage": "Hei! Aloita edistymisesi seuraaminen lisäämällä ensimmäinen oppisi",
     "searchByTitle": "Hae otsikolla",
     "addLearning": "Lisää oppi"
   },

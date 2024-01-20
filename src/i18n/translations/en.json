@@ -44,8 +44,8 @@
     "title": "Title",
     "description": "Description",
     "validationError": {
-      "title": "Title should have {{minLength}}-{{maxLength}} characters",
-      "description": "Description should have {{minLength}}-{{maxLength}} characters"
+      "title": "Title must have {{minLength}}-{{maxLength}} characters",
+      "description": "Description must have {{minLength}}-{{maxLength}} characters"
     }
   },
   "learningDetailsPage": {

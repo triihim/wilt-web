@@ -1,4 +1,4 @@
-import { Form, NavLink, NavLinkProps, Outlet, useLocation, useNavigation } from 'react-router-dom';
+import { Form, NavLink, NavLinkProps, Outlet, useLocation } from 'react-router-dom';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { Button } from '../components/Button';
 import { useLocalization } from '../hooks/useLocalization';
@@ -24,10 +24,9 @@ export function RootLayout() {
 }
 
 function MainHeader() {
-  const navigation = useNavigation();
   const { isLoading: localizationChangePending } = useLocalization();
 
-  const showLoader = navigation.state === 'loading' || localizationChangePending;
+  const showLoader = localizationChangePending;
 
   return (
     <header className="flex items-center justify-between">

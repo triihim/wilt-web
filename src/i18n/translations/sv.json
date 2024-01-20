@@ -7,7 +7,7 @@
   "common": {
     "save": "Spara",
     "cancel": "Avbryt",
-    "return": "Återvända",
+    "return": "Tillbaka",
     "delete": "Radera",
     "confirm": "Bekräfta",
     "createdAt": "Skapad",
@@ -36,7 +36,7 @@
     }
   },
   "learningListPage": {
-    "emptyListMessage": "Hej! Börja spåra din framsteg genom att lägga till din första inlärning",
+    "emptyListMessage": "Hej! Börja spåra dina framsteg genom att lägga till din första inlärning",
     "searchByTitle": "Sök efter titel",
     "addLearning": "Lägg till inlärning"
   },
@@ -44,8 +44,8 @@
     "title": "Titel",
     "description": "Beskrivning",
     "validationError": {
-      "title": "Titeln bör ha {{minLength}}-{{maxLength}} tecken",
-      "description": "Beskrivningen bör ha {{minLength}}-{{maxLength}} tecken"
+      "title": "Titeln ska ha {{minLength}}-{{maxLength}} tecken",
+      "description": "Beskrivningen ska ha {{minLength}}-{{maxLength}} tecken"
     }
   },
   "learningDetailsPage": {

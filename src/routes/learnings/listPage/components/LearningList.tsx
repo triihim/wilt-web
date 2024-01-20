@@ -1,18 +1,22 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigation, useSearchParams } from 'react-router-dom';
 import { withClassAddedToMatchingSections } from '../../../../util/components';
 import { LearningListItem } from '../loaders';
 import { useLocalization } from '../../../../hooks/useLocalization';
+import { CenteredLoadingIndicator } from '../../../../components/LoadingIndicator';
 
 type LearningListProps = {
   learnings: Array<LearningListItem>;
 };
 
 export function LearningList(props: LearningListProps) {
+  const navigation = useNavigation();
   return (
     <nav className="flex flex-col gap-2 md:gap-3">
-      {props.learnings.map((learning) => (
-        <LearningListTile key={learning.id} learning={learning} />
-      ))}
+      {navigation.state === 'loading' ? (
+        <CenteredLoadingIndicator />
+      ) : (
+        props.learnings.map((learning) => <LearningListTile key={learning.id} learning={learning} />)
+      )}
     </nav>
   );
 }

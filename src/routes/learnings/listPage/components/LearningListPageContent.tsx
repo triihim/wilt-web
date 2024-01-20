@@ -21,7 +21,8 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
 
   const currentPage = +(searchParams.get('page') ?? 0);
   const totalPages = Math.ceil(props.totalLearningCount / PAGE_SIZE);
-  const isLearningListEmpty = props.learnings.length < 1;
+
+  const userHasNoLearnings = props.learnings.length < 1 && !searchParams.get('title');
 
   const nextPage = () => {
     setSearchParams(
@@ -65,10 +66,10 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
       <LearningListControlPanel
         titleFilter={titleFilter}
         onTitleFilterChange={setTitleFilter}
-        highlightAddLearningButton={isLearningListEmpty}
+        highlightAddLearningButton={userHasNoLearnings}
       />
       <div className="bg-slate-100 mt-5 rounded-md p-5 grow overflow-y-auto">
-        {isLearningListEmpty ? (
+        {userHasNoLearnings ? (
           <EmptyListMessage />
         ) : (
           <>
