@@ -21,7 +21,7 @@ export function LoginPage() {
           {navigation.state === 'submitting' && <CenteredLoadingIndicator />}
           <Input id="email" name="email" label={t('loginPage.email')} />
           <Input id="password" name="password" type="password" label={t('loginPage.password')} />
-          <Button variant="primary" disabled={navigation.state === 'submitting'}>
+          <Button type="submit" variant="primary" disabled={navigation.state === 'submitting'}>
             {t('loginPage.login')}
           </Button>
         </Form>
