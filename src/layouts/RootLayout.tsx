@@ -49,7 +49,9 @@ function MainMenuNavigation() {
         </li>
       </ul>
       <Form method="post" action="/logout">
-        <Button variant="secondary">{t('nav.logout')}</Button>
+        <Button type="submit" variant="secondary">
+          {t('nav.logout')}
+        </Button>
       </Form>
     </nav>
   );
