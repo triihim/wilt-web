@@ -32,7 +32,7 @@ function LearningListTile({ learning }: LearningListTileProps) {
     <Link className="outline-offset-4 break-words" to={`/learnings/${learning.id}`}>
       <div className="py-2 px-3 md:py-3 md:px-4 border-2 border-slate-300 rounded-md bg-white text-gray-900 transition-all focus:bg-emerald-200 hover:bg-emerald-300 hover:border-slate-900">
         <h2 className="font-bold">
-          {withClassAddedToMatchingSections(learning.title, searchParams.get('title'), 'text-emerald-500')}
+          {withClassAddedToMatchingSections(learning.title, searchParams.get('title'), 'underline')}
         </h2>
         <time className="text-xs md:text-sm" dateTime={learning.createdAt}>
           {dayjs(learning.createdAt).format('L LT')}
