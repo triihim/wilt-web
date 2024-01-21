@@ -44,6 +44,7 @@
   "learningForm": {
     "title": "Title",
     "description": "Description",
+    "preview": "Preview",
     "validationError": {
       "title": "Title must have {{minLength}}-{{maxLength}} characters",
       "description": "Description must have {{minLength}}-{{maxLength}} characters"

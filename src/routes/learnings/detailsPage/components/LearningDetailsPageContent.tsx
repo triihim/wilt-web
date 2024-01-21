@@ -9,6 +9,7 @@ import { LearningEditControlPanel, LearningViewControlPanel } from './LearningDe
 import { useLocalization } from '../../../../hooks/useLocalization';
 import { Input } from '../../../../components/forms/Input';
 import { TextArea } from '../../../../components/forms/TextArea';
+import Markdown from 'react-markdown';
 
 type LearningDetailsPageContentProps = {
   learning: ILearning;
@@ -94,6 +95,7 @@ type LearningEditViewProps = {
 function LearningEditView(props: LearningEditViewProps) {
   const { t } = useLocalization();
   const fetcher = useFetcher<FetcherData>();
+  const [descriptionForPreview, setDescriptionForPreview] = useState(props.learning.description);
 
   const isSaving = fetcher.state === 'submitting';
 
@@ -104,8 +106,13 @@ function LearningEditView(props: LearningEditViewProps) {
   }, [fetcher.data, props]);
 
   // TODO: Prompt on cancel and return if the form is dirty.
+  // TODO: Preview option for mobile.
   return (
-    <fetcher.Form className="grow flex flex-col gap-3" action={`/learnings/${props.learning.id}/update`} method="post">
+    <fetcher.Form
+      className="grow flex flex-col gap-3 overflow-y-auto"
+      action={`/learnings/${props.learning.id}/update`}
+      method="post"
+    >
       <LearningEditControlPanel onReturn={props.onReturn} onCancel={props.onCancel} isSaving={isSaving} />
       {fetcher.data?.status === 'error' && (
         <ul className="text-red-500">
@@ -124,14 +131,23 @@ function LearningEditView(props: LearningEditViewProps) {
             disabled={isSaving}
           />
         </div>
-        <div className="grow flex flex-col">
-          <TextArea
-            name="description"
-            className="grow resize-none"
-            label={t('learningForm.description')}
-            defaultValue={props.learning.description}
-            disabled={isSaving}
-          />
+        <div className="grow flex gap-5">
+          <div className="flex flex-col md:basis-1/2 grow">
+            <TextArea
+              name="description"
+              className="grow resize-none"
+              label={t('learningForm.description')}
+              value={descriptionForPreview}
+              onChange={(e) => setDescriptionForPreview(e.target.value)}
+              disabled={isSaving}
+            />
+          </div>
+          <div className="hidden md:flex md:flex-col md:basis-1/2 ">
+            <label>{t('learningForm.preview')}</label>
+            <div className="border-2 rounded-md p-2 grow">
+              <Markdown className="prose max-w-none grow">{descriptionForPreview}</Markdown>
+            </div>
+          </div>
         </div>
       </div>
     </fetcher.Form>
