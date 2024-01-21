@@ -9,6 +9,7 @@
     "cancel": "Avbryt",
     "return": "Tillbaka",
     "delete": "Radera",
+    "edit": "Redigera",
     "confirm": "Bekräfta",
     "createdAt": "Skapad",
     "updatedAt": "Uppdaterad"
@@ -40,7 +41,7 @@
     "searchByTitle": "Sök efter titel",
     "addLearning": "Lägg till inlärning"
   },
-  "learningModal": {
+  "learningForm": {
     "title": "Titel",
     "description": "Beskrivning",
     "validationError": {

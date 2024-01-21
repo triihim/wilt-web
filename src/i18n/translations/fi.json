@@ -9,6 +9,7 @@
     "cancel": "Peruuta",
     "return": "Palaa",
     "delete": "Poista",
+    "edit": "Muokkaa",
     "confirm": "Vahvista",
     "createdAt": "Luotu",
     "updatedAt": "Päivitetty"
@@ -40,7 +41,7 @@
     "searchByTitle": "Hae otsikolla",
     "addLearning": "Lisää oppi"
   },
-  "learningModal": {
+  "learningForm": {
     "title": "Otsikko",
     "description": "Kuvaus",
     "validationError": {

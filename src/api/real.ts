@@ -45,3 +45,14 @@ export const deleteLearning = async (learningId: number): Promise<unknown> => {
   });
   return response;
 };
+
+export const updateLearning = async (learningId: number, title: string, description: string): Promise<unknown> => {
+  const response = await fetchAuthenticated(`${BASE_URL}/learning/${learningId}`, {
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: learningId, title, description }),
+  });
+  return response;
+};

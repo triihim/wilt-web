@@ -31,6 +31,10 @@ type ButtonProps = ComponentProps<'button'> & {
 
 export function Button(props: ButtonProps) {
   return (
-    <button {...props} className={`${buttonStyles.common} ${buttonStyles[props.variant]} ${props.className}`}></button>
+    <button
+      type="button"
+      {...props}
+      className={`${buttonStyles.common} ${buttonStyles[props.variant]} ${props.className}`}
+    ></button>
   );
 }

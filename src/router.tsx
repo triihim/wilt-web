@@ -1,7 +1,11 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { RequireAuth } from './auth/RequireAuth';
 import { RootLayout } from './layouts/RootLayout';
-import { createLearningAction, deleteLearningAction } from './routes/learnings/detailsPage/actions';
+import {
+  createLearningAction,
+  deleteLearningAction,
+  updateLearningAction,
+} from './routes/learnings/detailsPage/actions';
 import { ErrorView } from './routes/ErrorView';
 import { LearningDetailsPage } from './routes/learnings/detailsPage/LearningDetailsPage';
 import { LoginPage } from './routes/login/LoginPage';
@@ -48,6 +52,10 @@ export const router = createBrowserRouter([
               {
                 path: '/learnings/:learningId/delete',
                 action: deleteLearningAction,
+              },
+              {
+                path: '/learnings/:learningId/update',
+                action: updateLearningAction,
               },
             ],
           },

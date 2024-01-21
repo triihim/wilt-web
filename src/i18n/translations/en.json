@@ -9,6 +9,7 @@
     "cancel": "Cancel",
     "return": "Return",
     "delete": "Delete",
+    "edit": "Edit",
     "confirm": "Confirm",
     "createdAt": "Created at",
     "updatedAt": "Updated at"
@@ -40,7 +41,7 @@
     "searchByTitle": "Search by title",
     "addLearning": "Add learning"
   },
-  "learningModal": {
+  "learningForm": {
     "title": "Title",
     "description": "Description",
     "validationError": {

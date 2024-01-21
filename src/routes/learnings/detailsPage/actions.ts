@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from 'react-router-dom';
-import { createLearning, deleteLearning } from '../../../api/real';
+import { createLearning, deleteLearning, updateLearning } from '../../../api/real';
 import { FetcherData, ILearning } from '../../../types';
 import { AppError } from '../../../error';
 import { queryClient } from '../../../queryClient';
@@ -21,13 +21,38 @@ const CONSTRAINTS = {
   },
 };
 
+const validateLearningConstraints = (title: string, description: string) => {
+  const validationErrors = [];
+
+  if (title.length < CONSTRAINTS.title.length.min || title.length > CONSTRAINTS.title.length.max) {
+    validationErrors.push(
+      i18n.t('learningForm.validationError.title', {
+        minLength: CONSTRAINTS.title.length.min,
+        maxLength: CONSTRAINTS.title.length.max,
+      }),
+    );
+  }
+
+  if (
+    description.length < CONSTRAINTS.description.length.min ||
+    description.length > CONSTRAINTS.description.length.max
+  ) {
+    validationErrors.push(
+      i18n.t('learningForm.validationError.description', {
+        minLength: CONSTRAINTS.description.length.min,
+        maxLength: CONSTRAINTS.description.length.max,
+      }),
+    );
+  }
+
+  return validationErrors;
+};
+
 const expectedLearningKeys: Array<keyof ILearning> = ['id', 'createdAt', 'updatedAt', 'title', 'description'];
 
 export const isLearning = (maybeLearning: unknown): maybeLearning is ILearning =>
   !!maybeLearning && typeof maybeLearning === 'object' && expectedLearningKeys.every((key) => key in maybeLearning);
 
-// TODO: Refactor, this is getting messy.
-// TODO: Extract form validation to its own function?
 export async function createLearningAction(args: ActionFunctionArgs): Promise<FetcherData> {
   try {
     const formData = await args.request.formData();
@@ -35,28 +60,7 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
     const description =
       (formData.get('description') as string) ?? raiseError('invalid-form-data', 'Description missing from form data');
 
-    const validationErrors = [];
-
-    if (title.length < CONSTRAINTS.title.length.min || title.length > CONSTRAINTS.title.length.max) {
-      validationErrors.push(
-        i18n.t('learningModal.validationError.title', {
-          minLength: CONSTRAINTS.title.length.min,
-          maxLength: CONSTRAINTS.title.length.max,
-        }),
-      );
-    }
-
-    if (
-      description.length < CONSTRAINTS.description.length.min ||
-      description.length > CONSTRAINTS.description.length.max
-    ) {
-      validationErrors.push(
-        i18n.t('learningModal.validationError.description', {
-          minLength: CONSTRAINTS.description.length.min,
-          maxLength: CONSTRAINTS.description.length.max,
-        }),
-      );
-    }
+    const validationErrors = validateLearningConstraints(title, description);
 
     if (validationErrors.length > 0) {
       raiseError('invalid-user-input', validationErrors);
@@ -92,6 +96,38 @@ export async function deleteLearningAction(args: ActionFunctionArgs): Promise<Fe
     return { status: 'success', response: null };
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not delete the learning'];
+    return { status: 'error', messages: uiError };
+  }
+}
+
+export async function updateLearningAction(args: ActionFunctionArgs) {
+  try {
+    const learningId = args.params.learningId;
+
+    if (!learningId || isNaN(+learningId)) {
+      raiseError('bad-request', 'Delete learning action received invalid learning id');
+    }
+
+    const formData = await args.request.formData();
+    const title = (formData.get('title') as string) ?? raiseError('invalid-form-data', 'Title missing from form data');
+    const description =
+      (formData.get('description') as string) ?? raiseError('invalid-form-data', 'Description missing from form data');
+
+    const validationErrors = validateLearningConstraints(title, description);
+
+    if (validationErrors.length > 0) {
+      raiseError('invalid-user-input', validationErrors);
+    }
+
+    await updateLearning(+learningId, title, description);
+
+    await queryClient.invalidateQueries(['learning', +learningId]);
+    await queryClient.invalidateQueries('learnings');
+
+    return { status: 'success' };
+  } catch (err: unknown) {
+    console.log(err);
+    const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not update the learning'];
     return { status: 'error', messages: uiError };
   }
 }

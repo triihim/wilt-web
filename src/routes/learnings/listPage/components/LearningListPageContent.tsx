@@ -92,7 +92,7 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
 function EmptyListMessage() {
   const { t } = useTranslation();
   return (
-    <h2 className="text-center text-xl font-semibold py-10">
+    <h2 className="text-center text-xl font-semibold py-10 fade-in">
       {t('learningListPage.emptyListMessage')} <span className="text-2xl">&#129299;</span>
     </h2>
   );

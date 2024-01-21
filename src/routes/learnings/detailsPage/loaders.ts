@@ -11,7 +11,7 @@ export type LoaderResponse = {
 export async function learningLoader({ params }: { params: { learningId?: string } }) {
   const learningId = params.learningId ?? raiseError('unspecified', 'Missing learning id');
 
-  const q = queryClient.fetchQuery(['learning', learningId], () => getLearning(+learningId));
+  const q = queryClient.fetchQuery(['learning', +learningId], () => getLearning(+learningId));
 
   return defer({ learningPromise: q } as LoaderResponse);
 }

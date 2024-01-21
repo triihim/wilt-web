@@ -22,6 +22,8 @@ type ControlGroupProps = PropsWithChildren & {
 
 ControlPanel.ControlGroup = function ({ children, alignItems = 'left' }: ControlGroupProps) {
   return (
-    <div className={`flex gap-5 w-full ${{ left: 'justify-start', right: 'justify-end' }[alignItems]}`}>{children}</div>
+    <div className={`flex gap-5 w-full items-center ${{ left: 'justify-start', right: 'justify-end' }[alignItems]}`}>
+      {children}
+    </div>
   );
 };

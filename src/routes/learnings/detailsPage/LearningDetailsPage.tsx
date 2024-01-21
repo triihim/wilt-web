@@ -17,13 +17,13 @@ export function LearningDetailsPage() {
   return (
     <Suspense fallback={<CenteredLoadingIndicator />}>
       <Await resolve={data.learningPromise} errorElement={<ErrorView />}>
-        {(learning) =>
-          isLearning(learning) ? (
+        {(learning) => {
+          return isLearning(learning) ? (
             <LearningDetailsPageContent learning={learning} />
           ) : (
             raiseError('invalid-loader-response', 'Received invalid object to render as a learning')
-          )
-        }
+          );
+        }}
       </Await>
     </Suspense>
   );

@@ -1,22 +1,60 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useFetcher } from 'react-router-dom';
 import { CenteredLoadingIndicator } from '../../../../components/LoadingIndicator';
 import { ModalContext } from '../../../../components/modal/ModalContext';
 import { ILearning, FetcherData } from '../../../../types';
 import { ConfirmModal } from '../../../../components/modal/ConfirmModal';
 import { LearningDetails } from './LearningDetails';
-import { LearningDetailsControlPanel } from './LearningDetailsControlPanel';
+import { LearningEditControlPanel, LearningViewControlPanel } from './LearningDetailsControlPanel';
 import { useLocalization } from '../../../../hooks/useLocalization';
+import { Input } from '../../../../components/forms/Input';
+import { TextArea } from '../../../../components/forms/TextArea';
 
 type LearningDetailsPageContentProps = {
   learning: ILearning;
 };
 
 export function LearningDetailsPageContent(props: LearningDetailsPageContentProps) {
+  const [editing, setEditing] = useState(false);
   const navigate = useNavigate();
+
+  const returnToTimeline = () => {
+    // TODO: Check that navigate(-1) returns to timeline. The user could have arrived to this page through a direct link
+    // and navigate(-1) lead to a page outside the app. However, current behavior maintains pagination and search state on return.
+    navigate(-1);
+  };
+
+  const enterEditingMode = () => setEditing(true);
+  const leaveEditingMode = () => setEditing(false);
+
+  return editing ? (
+    <LearningEditView
+      learning={props.learning}
+      onCancel={leaveEditingMode}
+      onReturn={returnToTimeline}
+      onSaved={leaveEditingMode}
+    />
+  ) : (
+    <LearningReadingView learning={props.learning} onEdit={enterEditingMode} onReturn={returnToTimeline} />
+  );
+}
+
+type LearningReadingViewProps = {
+  learning: ILearning;
+  onEdit(): void;
+  onReturn(): void;
+};
+function LearningReadingView(props: LearningReadingViewProps) {
   const { setModalContent } = useContext(ModalContext);
-  const fetcher = useFetcher<FetcherData>();
+  const navigate = useNavigate();
   const { t } = useLocalization();
+  const fetcher = useFetcher<FetcherData>();
+
+  useEffect(() => {
+    if (fetcher.data?.status === 'success') {
+      navigate('/learnings', { replace: true });
+    }
+  }, [fetcher.data, navigate]);
 
   const initiateLearningDeletion = () => {
     fetcher.submit(null, {
@@ -27,25 +65,75 @@ export function LearningDetailsPageContent(props: LearningDetailsPageContentProp
     setModalContent(null);
   };
 
-  useEffect(() => {
-    if (fetcher.data?.status === 'success') {
-      navigate('/learnings', { replace: true });
-    }
-  }, [fetcher.data, navigate]);
-
   if (fetcher.state === 'submitting') return <CenteredLoadingIndicator />;
 
-  const promptText = `${t('learningDetailsPage.confirmDelete')}: ${props.learning.title}`;
+  const confirmDeletePromptText = `${t('learningDetailsPage.confirmDelete')}: ${props.learning.title}`;
 
   return (
     <>
-      <LearningDetailsControlPanel
-        onDelete={() => setModalContent(<ConfirmModal prompt={promptText} onConfirm={initiateLearningDeletion} />)}
-        onReturn={() => navigate(-1)}
+      <LearningViewControlPanel
+        onEdit={props.onEdit}
+        onReturn={props.onReturn}
+        onDelete={() =>
+          setModalContent(<ConfirmModal prompt={confirmDeletePromptText} onConfirm={initiateLearningDeletion} />)
+        }
       />
-      <div className="grow my-5 pr-5 overflow-y-auto">
+      <div className="grow my-5 pr-5 overflow-y-auto flex flex-col">
         <LearningDetails learning={props.learning} />
       </div>
     </>
+  );
+}
+
+type LearningEditViewProps = {
+  learning: ILearning;
+  onCancel(): void;
+  onReturn(): void;
+  onSaved(): void;
+};
+function LearningEditView(props: LearningEditViewProps) {
+  const { t } = useLocalization();
+  const fetcher = useFetcher<FetcherData>();
+
+  const isSaving = fetcher.state === 'submitting';
+
+  useEffect(() => {
+    if (fetcher.data?.status === 'success') {
+      props.onSaved();
+    }
+  }, [fetcher.data, props]);
+
+  // TODO: Prompt on cancel and return if the form is dirty.
+  return (
+    <fetcher.Form className="grow flex flex-col gap-3" action={`/learnings/${props.learning.id}/update`} method="post">
+      <LearningEditControlPanel onReturn={props.onReturn} onCancel={props.onCancel} isSaving={isSaving} />
+      {fetcher.data?.status === 'error' && (
+        <ul className="text-red-500">
+          {fetcher.data.messages.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
+      <div className="flex flex-col gap-3 grow overflow-y-auto">
+        <div>
+          <Input
+            name="title"
+            label={t('learningForm.title')}
+            className="font-bold text-3xl"
+            defaultValue={props.learning.title}
+            disabled={isSaving}
+          />
+        </div>
+        <div className="grow flex flex-col">
+          <TextArea
+            name="description"
+            className="grow resize-none"
+            label={t('learningForm.description')}
+            defaultValue={props.learning.description}
+            disabled={isSaving}
+          />
+        </div>
+      </div>
+    </fetcher.Form>
   );
 }

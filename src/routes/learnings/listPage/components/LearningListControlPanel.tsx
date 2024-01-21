@@ -75,15 +75,19 @@ function LearningCreationForm(props: LearningCreationFormProps) {
   return (
     <div className="flex flex-col gap-10">
       <fetcher.Form className="flex flex-col gap-5" method="post" action="/learnings/new">
-        <Input autoFocus name="title" label={t('learningModal.title')} disabled={isSubmitting} />
-        <TextArea
-          name="description"
-          label={t('learningModal.description')}
-          disabled={isSubmitting}
-          rows={5}
-          maxLength={2000}
-          className="resize-none"
-        />
+        <div>
+          <Input autoFocus name="title" label={t('learningForm.title')} disabled={isSubmitting} />
+        </div>
+        <div>
+          <TextArea
+            name="description"
+            label={t('learningForm.description')}
+            disabled={isSubmitting}
+            rows={5}
+            maxLength={2000}
+            className="resize-none"
+          />
+        </div>
         <SubmitGroup
           errors={fetcher.data?.status === 'error' ? fetcher.data.messages : []}
           disabled={isSubmitting}

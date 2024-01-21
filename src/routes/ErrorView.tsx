@@ -6,6 +6,8 @@ import { useLocalization } from '../hooks/useLocalization';
 export function ErrorView() {
   const error = useRouteError();
 
+  console.error(error);
+
   if (error instanceof AppError) {
     switch (error.type) {
       case 'unauthorized':

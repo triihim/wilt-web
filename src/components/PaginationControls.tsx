@@ -12,7 +12,7 @@ export function PaginationControls(props: ListControlsProps) {
   const { t } = useLocalization();
   const hasNextPage = props.currentPage < props.totalPages - 1; // -1 to account for 0 based pagination.
   const hasPreviousPage = props.currentPage > 0;
-  const paginationText = props.totalPages > 0 ? `${props.currentPage + 1} / ${props.totalPages}` : '0 of 0';
+  const paginationText = props.totalPages > 0 ? `${props.currentPage + 1} / ${props.totalPages}` : '0 / 0';
   return (
     <div className="flex items-center">
       <div className="w-1/3">
