@@ -46,6 +46,7 @@ export function LearningListControlPanel(props: LearningControlsProps) {
       <ControlPanel.ControlGroup>
         <Input
           placeholder={t('learningListPage.searchByTitle')}
+          id="title-search"
           value={props.titleFilter}
           onChange={(e) => props.onTitleFilterChange(e.target.value)}
         />

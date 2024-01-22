@@ -126,7 +126,6 @@ export async function updateLearningAction(args: ActionFunctionArgs) {
 
     return { status: 'success' };
   } catch (err: unknown) {
-    console.log(err);
     const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not update the learning'];
     return { status: 'error', messages: uiError };
   }

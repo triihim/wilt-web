@@ -32,15 +32,15 @@ export const loadDayjsLocale = async (locale: Locale) => {
   }
 };
 
-export const initDayjs = async () => {
-  const locale = navigatorLanguageToSupportedLocale(navigator.language);
+export const initDayjs = async (initialLocale?: Locale) => {
+  const locale = navigatorLanguageToSupportedLocale(initialLocale || navigator.language);
   await loadDayjsLocale(locale);
   dayjs.extend(localizedFormat);
   dayjs.locale(locale);
 };
 
-export const initI18n = async () => {
-  const initialLanguage = navigatorLanguageToSupportedLocale(navigator.language);
+export const initI18n = async (initialLocale?: Locale) => {
+  const initialLanguage = navigatorLanguageToSupportedLocale(initialLocale || navigator.language);
   const translation = await import(`./translations/${initialLanguage}.json`);
   i18n.use(initReactI18next).init({
     resources: { [initialLanguage]: { translation } },

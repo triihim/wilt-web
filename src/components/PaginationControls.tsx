@@ -16,7 +16,12 @@ export function PaginationControls(props: ListControlsProps) {
   return (
     <div className="flex items-center">
       <div className="w-1/3">
-        <Button variant="tertiary" onClick={props.previousPage} disabled={!hasPreviousPage}>
+        <Button
+          variant="tertiary"
+          onClick={props.previousPage}
+          disabled={!hasPreviousPage}
+          data-testid="pagination-button-previous"
+        >
           <span className="md:hidden">{t('pagination.previous')}</span>
           <span className="hidden md:inline">{t('pagination.previousPage')}</span>
         </Button>
@@ -24,10 +29,15 @@ export function PaginationControls(props: ListControlsProps) {
       <p className="font-bold grow text-center text-xs md:text-md">
         <span>{t('pagination.page')}</span>
         <br />
-        {paginationText}
+        <span data-testid="pagination-page">{paginationText}</span>
       </p>
       <div className="w-1/3 text-right">
-        <Button variant="tertiary" onClick={props.nextPage} disabled={!hasNextPage}>
+        <Button
+          variant="tertiary"
+          onClick={props.nextPage}
+          disabled={!hasNextPage}
+          data-testid="pagination-button-next"
+        >
           <span className="md:hidden">{t('pagination.next')}</span>
           <span className="hidden md:inline">{t('pagination.nextPage')}</span>
         </Button>
