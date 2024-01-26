@@ -19,8 +19,12 @@ export function LoginPage() {
             <p className="text-center text-red-500">{t('loginPage.error.loginFailed')}</p>
           )}
           {navigation.state === 'submitting' && <CenteredLoadingIndicator />}
-          <Input id="email" name="email" label={t('loginPage.email')} />
-          <Input id="password" name="password" type="password" label={t('loginPage.password')} />
+          <div>
+            <Input id="email" name="email" label={t('loginPage.email')} />
+          </div>
+          <div>
+            <Input id="password" name="password" type="password" label={t('loginPage.password')} />
+          </div>
           <Button type="submit" variant="primary" disabled={navigation.state === 'submitting'}>
             {t('loginPage.login')}
           </Button>
