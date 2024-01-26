@@ -1,0 +1,53 @@
+name: Deploy
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    name: Test and build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Archive build
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download archived build
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.ASWA_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          skip_app_build: true
+          skip_api_build: true
+          app_location: 'dist'
