@@ -48,7 +48,7 @@ function MainMenuNavigation() {
           <MainHeaderNavLink to={'/learnings'}>{t('nav.learnings')}</MainHeaderNavLink>
         </li>
       </ul>
-      <Form method="post" action="/logout">
+      <Form method="get" action="/logout">
         <Button type="submit" variant="secondary">
           {t('nav.logout')}
         </Button>

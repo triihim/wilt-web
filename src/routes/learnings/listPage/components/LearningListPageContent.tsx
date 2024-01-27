@@ -68,7 +68,7 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
         onTitleFilterChange={setTitleFilter}
         highlightAddLearningButton={userHasNoLearnings}
       />
-      <div className="bg-slate-100 mt-5 rounded-md p-5 grow overflow-y-auto">
+      <div className="bg-slate-100 mt-5 rounded-md p-3 md:p-5 grow overflow-y-auto">
         {userHasNoLearnings ? (
           <EmptyListMessage />
         ) : (

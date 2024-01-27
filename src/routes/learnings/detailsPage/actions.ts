@@ -53,6 +53,7 @@ const expectedLearningKeys: Array<keyof ILearning> = ['id', 'createdAt', 'update
 export const isLearning = (maybeLearning: unknown): maybeLearning is ILearning =>
   !!maybeLearning && typeof maybeLearning === 'object' && expectedLearningKeys.every((key) => key in maybeLearning);
 
+// TODO: Translate error messages.
 export async function createLearningAction(args: ActionFunctionArgs): Promise<FetcherData> {
   try {
     const formData = await args.request.formData();
@@ -77,10 +78,14 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
     }
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not create the learning'];
+
+    if (err instanceof AppError && err.type === 'unauthorized') throw err;
+
     return { status: 'error', messages: uiError };
   }
 }
 
+// TODO: Translate error messages.
 export async function deleteLearningAction(args: ActionFunctionArgs): Promise<FetcherData> {
   const learningId = args.params.learningId;
 
@@ -96,10 +101,14 @@ export async function deleteLearningAction(args: ActionFunctionArgs): Promise<Fe
     return { status: 'success', response: null };
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not delete the learning'];
+
+    if (err instanceof AppError && err.type === 'unauthorized') throw err;
+
     return { status: 'error', messages: uiError };
   }
 }
 
+// TODO: Translate error messages.
 export async function updateLearningAction(args: ActionFunctionArgs) {
   try {
     const learningId = args.params.learningId;
@@ -127,6 +136,9 @@ export async function updateLearningAction(args: ActionFunctionArgs) {
     return { status: 'success' };
   } catch (err: unknown) {
     const uiError = err instanceof AppError && err.messages ? err.messages : ['Could not update the learning'];
+
+    if (err instanceof AppError && err.type === 'unauthorized') throw err;
+
     return { status: 'error', messages: uiError };
   }
 }

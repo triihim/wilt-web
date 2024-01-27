@@ -11,7 +11,7 @@ import { LearningDetailsPage } from './routes/learnings/detailsPage/LearningDeta
 import { LoginPage } from './routes/login/LoginPage';
 import { loginAction } from './routes/login/actions';
 import { loginLoader } from './routes/login/loaders';
-import { logoutAction } from './routes/logout/actions';
+import { logoutLoader } from './routes/logout/loaders';
 import { listPageLoader } from './routes/learnings/listPage/loaders';
 import { LearningListPage } from './routes/learnings/listPage/LearningListPage';
 import { learningLoader } from './routes/learnings/detailsPage/loaders';
@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/logout',
-        action: logoutAction,
+        loader: logoutLoader,
       },
     ],
   },

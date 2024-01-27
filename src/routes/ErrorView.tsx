@@ -1,25 +1,27 @@
-import { Navigate, useRouteError } from 'react-router-dom';
-import clientStorage from '../clientStorage';
+import { Navigate, useAsyncError, useRouteError } from 'react-router-dom';
 import { AppError } from '../error';
 import { useLocalization } from '../hooks/useLocalization';
 
+function handleAppError(error: AppError) {
+  switch (error.type) {
+    case 'unauthorized':
+      return <Navigate to={'/logout'} />;
+    case 'not-found':
+      return <Navigate to={'/'} />;
+    default:
+      return <ErrorList />;
+  }
+}
+
 export function ErrorView() {
   const error = useRouteError();
+  const asyncError = useAsyncError();
 
-  console.error(error);
+  console.error('ERR', error);
+  console.error('ASYNCERR', asyncError);
 
-  if (error instanceof AppError) {
-    switch (error.type) {
-      case 'unauthorized':
-        clientStorage.setAccessToken(null);
-        clientStorage.setRefreshToken(null);
-        return <Navigate to={'/login'} />;
-      case 'not-found':
-        return <Navigate to={'/'} />;
-      default:
-        break;
-    }
-  }
+  if (error instanceof AppError) return handleAppError(error);
+  if (asyncError instanceof AppError) return handleAppError(asyncError);
 
   return <ErrorList />;
 }
