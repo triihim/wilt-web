@@ -12,7 +12,7 @@ export function RootLayout() {
   const atLoginPage = pathname.indexOf('/login') !== -1;
   return (
     <ModalContextProvider>
-      <div className="w-11/12 lg:w-3/4 m-auto font-nunito transition-[width] duration-500 min-h-screen max-h-screen flex flex-col gap-5 pt-5 md:py-5">
+      <div className="w-11/12 lg:w-3/4 m-auto font-nunito transition-[width] duration-500 min-h-svh max-h-lvh flex flex-col gap-5 pt-5 md:py-5">
         {!atLoginPage && <MainHeader />}
         <main className="grow flex flex-col overflow-y-auto">
           <Outlet />
