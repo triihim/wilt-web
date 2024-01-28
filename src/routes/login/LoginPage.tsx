@@ -25,8 +25,17 @@ export function LoginPage() {
           <div>
             <Input id="password" name="password" type="password" label={t('loginPage.password')} />
           </div>
-          <Button type="submit" variant="primary" disabled={navigation.state === 'submitting'}>
+          <Button
+            type="submit"
+            variant="primary"
+            name="intent"
+            value="login"
+            disabled={navigation.state === 'submitting'}
+          >
             {t('loginPage.login')}
+          </Button>
+          <Button type="submit" name="intent" value="test" variant="secondary">
+            {t('loginPage.loginAsTester')}
           </Button>
         </Form>
       </div>

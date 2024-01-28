@@ -29,6 +29,7 @@
     "previousPage": "Edellinen sivu"
   },
   "loginPage": {
+    "loginAsTester": "Kirjaudu yleisellä testitunnuksella",
     "login": "Kirjaudu sisään",
     "email": "Sähköpostiosoite",
     "password": "Salasana",

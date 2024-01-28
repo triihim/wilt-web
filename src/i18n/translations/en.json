@@ -29,6 +29,7 @@
     "previousPage": "Previous page"
   },
   "loginPage": {
+    "loginAsTester": "Login with shared test user account",
     "login": "Login",
     "email": "Email address",
     "password": "Password",

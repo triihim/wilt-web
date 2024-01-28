@@ -15,9 +15,18 @@ export type LoginActionResponse =
 export async function loginAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   try {
-    const email = (formData.get('email') as string) ?? raiseError('invalid-user-input', 'Email missing from form data');
+    const intent = formData.get('intent');
+
+    const email =
+      intent === 'test'
+        ? 'tester@wilt.com'
+        : (formData.get('email') as string) ?? raiseError('invalid-user-input', 'Email missing from form data');
+
     const password =
-      (formData.get('password') as string) ?? raiseError('invalid-user-input', 'Password missing from form data');
+      intent === 'test'
+        ? 'This_Is_Tester2024!'
+        : (formData.get('password') as string) ?? raiseError('invalid-user-input', 'Password missing from form data');
+
     const result = await login(email, password);
 
     const gotResult = result && typeof result === 'object';

@@ -29,6 +29,7 @@
     "previousPage": "Föregående sida"
   },
   "loginPage": {
+    "loginAsTester": "Logga in som testanvändare",
     "login": "Logga in",
     "email": "E-postadress",
     "password": "Lösenord",
