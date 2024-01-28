@@ -2,7 +2,8 @@ import dayjs from 'dayjs';
 import { PropsWithChildren, createContext, useState } from 'react';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
-import { Locale, loadDayjsLocale, loadTranslationBundle, navigatorLanguageToSupportedLocale } from './config';
+import { Locale, loadDayjsLocale, loadTranslationBundle, toSupportedLocale } from './config';
+import clientStorage from '../clientStorage';
 
 const changeI18nLanguage = async (locale: Locale) => {
   const translations = await loadTranslationBundle(locale);
@@ -23,12 +24,12 @@ type LocaleContext = {
 
 export const LocaleContext = createContext<LocaleContext>({
   setLocale: async () => {},
-  currentLocale: navigatorLanguageToSupportedLocale(navigator.language),
+  currentLocale: toSupportedLocale(navigator.language),
   isLoading: false,
 });
 
 export function LocaleContextProvider(props: PropsWithChildren) {
-  const [locale, setLocale] = useState<Locale>(navigatorLanguageToSupportedLocale(navigator.language));
+  const [locale, setLocale] = useState<Locale>(toSupportedLocale(i18n.language));
   const [isLoading, setIsLoading] = useState(false);
 
   const changeLocale = async (locale: Locale) => {
@@ -36,6 +37,7 @@ export function LocaleContextProvider(props: PropsWithChildren) {
     await changeI18nLanguage(locale);
     await changeDayjsLocale(locale);
     setLocale(locale);
+    clientStorage.setLocale(locale);
     setIsLoading(false);
   };
 

@@ -2,13 +2,15 @@ import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
+import clientStorage from '../clientStorage';
 
 // Note: locale is slightly misleading term here, since there is currently no differentiation between en-us, en-gb etc.
+// However, dayjs localizes dates based on these.
 export const supportedLocales = ['en', 'fi', 'sv'] as const;
 
 export type Locale = (typeof supportedLocales)[number];
 
-export const navigatorLanguageToSupportedLocale = (language: string): Locale => {
+export const toSupportedLocale = (language: string): Locale => {
   // Safari on iOS prior to 10.2, the country code returned is lowercase: "en-us", "fr-fr" etc. (https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language)
   const normalizedLanguageCode = language.toLowerCase();
   const match = supportedLocales.find((l) => normalizedLanguageCode.startsWith(l));
@@ -33,14 +35,16 @@ export const loadDayjsLocale = async (locale: Locale) => {
 };
 
 export const initDayjs = async (initialLocale?: Locale) => {
-  const locale = navigatorLanguageToSupportedLocale(initialLocale || navigator.language);
+  const userLocale = initialLocale || clientStorage.getLocale() || navigator.language;
+  const locale = toSupportedLocale(userLocale);
   await loadDayjsLocale(locale);
   dayjs.extend(localizedFormat);
   dayjs.locale(locale);
 };
 
 export const initI18n = async (initialLocale?: Locale) => {
-  const initialLanguage = navigatorLanguageToSupportedLocale(initialLocale || navigator.language);
+  const userLocale = initialLocale || clientStorage.getLocale() || navigator.language;
+  const initialLanguage = toSupportedLocale(userLocale);
   const translation = await import(`./translations/${initialLanguage}.json`);
   i18n.use(initReactI18next).init({
     resources: { [initialLanguage]: { translation } },
