@@ -1,4 +1,4 @@
-import { Form, NavLink, NavLinkProps, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, NavLinkProps, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { Button } from '../components/Button';
 import { useLocalization } from '../hooks/useLocalization';
@@ -6,20 +6,23 @@ import { ModalContextProvider } from '../components/modal/ModalContext';
 import { GrLanguage } from 'react-icons/gr';
 import { useEffect, useState } from 'react';
 import { Locale, supportedLocales } from '../i18n/config';
+import { NotificationContextProvider } from '../components/notification/NotificationContext';
 
 export function RootLayout() {
   const { pathname } = useLocation();
   const atLoginPage = pathname.indexOf('/login') !== -1;
   return (
-    <ModalContextProvider>
-      <div className="w-11/12 lg:w-3/4 m-auto font-nunito transition-[width] duration-500 min-h-svh max-h-svh flex flex-col gap-5 pt-5 md:py-5">
-        {!atLoginPage && <MainHeader />}
-        <main className="grow flex flex-col overflow-y-auto">
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
-    </ModalContextProvider>
+    <NotificationContextProvider>
+      <ModalContextProvider>
+        <div className="w-11/12 lg:w-3/4 m-auto font-nunito transition-[width] duration-500 min-h-svh max-h-svh flex flex-col gap-5 pt-5 md:py-5">
+          {!atLoginPage && <MainHeader />}
+          <main className="grow flex flex-col overflow-y-auto">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+      </ModalContextProvider>
+    </NotificationContextProvider>
   );
 }
 
@@ -41,6 +44,7 @@ function MainHeader() {
 
 function MainMenuNavigation() {
   const { t } = useLocalization();
+  const navigate = useNavigate();
   return (
     <nav className="flex items-center justify-center gap-5 md:gap-10">
       <ul className="font-bold">
@@ -48,11 +52,9 @@ function MainMenuNavigation() {
           <MainHeaderNavLink to={'/learnings'}>{t('nav.learnings')}</MainHeaderNavLink>
         </li>
       </ul>
-      <Form method="get" action="/logout">
-        <Button type="submit" variant="secondary">
-          {t('nav.logout')}
-        </Button>
-      </Form>
+      <Button type="submit" variant="secondary" onClick={() => navigate('/logout')}>
+        {t('nav.logout')}
+      </Button>
     </nav>
   );
 }

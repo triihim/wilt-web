@@ -12,7 +12,11 @@
     "edit": "Edit",
     "confirm": "Confirm",
     "createdAt": "Created at",
-    "updatedAt": "Updated at"
+    "updatedAt": "Updated at",
+    "close": "Close"
+  },
+  "notification": {
+    "startup": "Waking up the servers... just sit tight!"
   },
   "error": {
     "general": "Something went wrong"

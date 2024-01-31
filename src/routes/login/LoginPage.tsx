@@ -4,11 +4,30 @@ import { Button } from '../../components/Button';
 import { LoginActionResponse } from './actions';
 import { CenteredLoadingIndicator } from '../../components/LoadingIndicator';
 import { useLocalization } from '../../hooks/useLocalization';
+import { useContext, useEffect } from 'react';
+import { NotificationContext } from '../../components/notification/NotificationContext';
+
+const NOTIFICATION_DELAY_MS = 3000;
 
 export function LoginPage() {
   const navigation = useNavigation();
   const actionData = useActionData() as LoginActionResponse | undefined;
   const { t } = useLocalization();
+  const { setNotification } = useContext(NotificationContext);
+
+  useEffect(() => {
+    // Show notification if logging in takes a long time due to backend being scaled to zero.
+    let timeout: NodeJS.Timeout;
+    if (navigation.state === 'submitting') {
+      timeout = setTimeout(() => {
+        setNotification({ type: 'info', message: t('notification.startup') });
+      }, NOTIFICATION_DELAY_MS);
+    }
+    return () => {
+      clearTimeout(timeout);
+      setNotification(null);
+    };
+  }, [navigation.state]);
 
   return (
     <div className="h-screen flex flex-col justify-center">
