@@ -15,6 +15,9 @@
     "updatedAt": "Updated at",
     "close": "Close"
   },
+  "notification": {
+    "startup": "Waking up the servers... just sit tight!"
+  },
   "error": {
     "general": "Something went wrong"
   },

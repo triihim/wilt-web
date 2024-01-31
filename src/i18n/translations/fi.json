@@ -15,6 +15,9 @@
     "updatedAt": "Päivitetty",
     "close": "Sulje"
   },
+  "notification": {
+    "startup": "Herätellään servereitä... odota hetki"
+  },
   "error": {
     "general": "Jotain meni pieleen"
   },

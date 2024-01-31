@@ -15,6 +15,9 @@
     "updatedAt": "Uppdaterad",
     "close": "Stänga"
   },
+  "notification": {
+    "startup": "Väcker upp servrarna... sitt still"
+  },
   "error": {
     "general": "Något gick fel"
   },
