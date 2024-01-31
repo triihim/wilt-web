@@ -1,4 +1,4 @@
-import { Form, NavLink, NavLinkProps, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, NavLinkProps, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { Button } from '../components/Button';
 import { useLocalization } from '../hooks/useLocalization';
@@ -41,6 +41,7 @@ function MainHeader() {
 
 function MainMenuNavigation() {
   const { t } = useLocalization();
+  const navigate = useNavigate();
   return (
     <nav className="flex items-center justify-center gap-5 md:gap-10">
       <ul className="font-bold">
@@ -48,11 +49,9 @@ function MainMenuNavigation() {
           <MainHeaderNavLink to={'/learnings'}>{t('nav.learnings')}</MainHeaderNavLink>
         </li>
       </ul>
-      <Form method="get" action="/logout">
-        <Button type="submit" variant="secondary">
-          {t('nav.logout')}
-        </Button>
-      </Form>
+      <Button type="submit" variant="secondary" onClick={() => navigate('/logout')}>
+        {t('nav.logout')}
+      </Button>
     </nav>
   );
 }
