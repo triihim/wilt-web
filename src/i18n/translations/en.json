@@ -12,7 +12,8 @@
     "edit": "Edit",
     "confirm": "Confirm",
     "createdAt": "Created at",
-    "updatedAt": "Updated at"
+    "updatedAt": "Updated at",
+    "close": "Close"
   },
   "error": {
     "general": "Something went wrong"

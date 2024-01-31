@@ -12,7 +12,8 @@
     "edit": "Muokkaa",
     "confirm": "Vahvista",
     "createdAt": "Luotu",
-    "updatedAt": "Päivitetty"
+    "updatedAt": "Päivitetty",
+    "close": "Sulje"
   },
   "error": {
     "general": "Jotain meni pieleen"

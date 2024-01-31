@@ -12,7 +12,8 @@
     "edit": "Redigera",
     "confirm": "Bekräfta",
     "createdAt": "Skapad",
-    "updatedAt": "Uppdaterad"
+    "updatedAt": "Uppdaterad",
+    "close": "Stänga"
   },
   "error": {
     "general": "Något gick fel"
