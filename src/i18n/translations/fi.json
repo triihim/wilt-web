@@ -23,6 +23,7 @@
   },
   "nav": {
     "learnings": "Opit",
+    "statistics": "Tilastot",
     "logout": "Kirjaudu ulos"
   },
   "pagination": {
@@ -57,5 +58,8 @@
   },
   "learningDetailsPage": {
     "confirmDelete": "Vahvista, että haluat poistaa opin"
+  },
+  "statistics": {
+    "title": "Kuluneen viikon opit"
   }
 }

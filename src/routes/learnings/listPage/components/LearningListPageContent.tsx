@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigation, useSearchParams } from 'react-router-dom';
 import { useDebounce } from '../../../../hooks/useDebounce';
 import { LearningListItem, PAGE_SIZE } from '../loaders';
 import { LearningListControlPanel } from './LearningListControlPanel';
 import { PaginationControls } from '../../../../components/PaginationControls';
 import { LearningList } from './LearningList';
 import { useTranslation } from 'react-i18next';
+import { CenteredLoadingIndicator } from '../../../../components/LoadingIndicator';
+import { NO_GLOBAL_LOADER } from '../../../../layouts/RootLayout';
 
 type LearningListPageContentProps = {
   learnings: Array<LearningListItem>;
@@ -18,11 +20,14 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [titleFilter, setTitleFilter] = useState(searchParams.get('title') || '');
   const debouncedTitleFilter = useDebounce(titleFilter, FILTER_DEBOUNCE_TIME);
+  const navigation = useNavigation();
 
   const currentPage = +(searchParams.get('page') ?? 0);
   const totalPages = Math.ceil(props.totalLearningCount / PAGE_SIZE);
 
   const userHasNoLearnings = props.learnings.length < 1 && !searchParams.get('title');
+
+  const loading = navigation.state === 'loading' && navigation.location.search !== '';
 
   const nextPage = () => {
     setSearchParams(
@@ -31,7 +36,7 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
         params.set('page', nextPage.toString());
         return params;
       },
-      { replace: true },
+      { replace: true, state: NO_GLOBAL_LOADER },
     );
   };
 
@@ -42,7 +47,7 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
         params.set('page', previousPage.toString());
         return params;
       },
-      { replace: true },
+      { replace: true, state: NO_GLOBAL_LOADER },
     );
   };
 
@@ -57,9 +62,18 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
         params.set('page', '0');
         return params;
       },
-      { replace: true },
+      { replace: true, state: NO_GLOBAL_LOADER },
     );
   }, [debouncedTitleFilter]);
+
+  // TODO: Extract to own component?
+  const content = loading ? (
+    <CenteredLoadingIndicator />
+  ) : userHasNoLearnings ? (
+    <EmptyListMessage />
+  ) : (
+    <LearningList learnings={props.learnings} />
+  );
 
   return (
     <>
@@ -68,15 +82,7 @@ export function LearningListPageContent(props: LearningListPageContentProps) {
         onTitleFilterChange={setTitleFilter}
         highlightAddLearningButton={userHasNoLearnings}
       />
-      <div className="bg-slate-100 mt-5 rounded-md p-3 md:p-5 grow overflow-y-auto">
-        {userHasNoLearnings ? (
-          <EmptyListMessage />
-        ) : (
-          <>
-            <LearningList learnings={props.learnings} />
-          </>
-        )}
-      </div>
+      <div className="bg-slate-100 mt-5 rounded-md p-3 md:p-5 grow overflow-y-auto">{content}</div>
       <div className="bg-slate-100 p-2 rounded-b-md border-t-2 border-slate-300">
         <PaginationControls
           nextPage={nextPage}

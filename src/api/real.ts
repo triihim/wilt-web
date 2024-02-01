@@ -56,3 +56,8 @@ export const updateLearning = async (learningId: number, title: string, descript
   });
   return response;
 };
+
+export const getWeekStatistics = async (toDate: Date): Promise<unknown> => {
+  const response = await fetchAuthenticated(`${BASE_URL}/statistics/week/${toDate.toISOString()}`);
+  return response.json();
+};

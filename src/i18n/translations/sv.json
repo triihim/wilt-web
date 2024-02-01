@@ -13,7 +13,7 @@
     "confirm": "Bekräfta",
     "createdAt": "Skapad",
     "updatedAt": "Uppdaterad",
-    "close": "Stänga"
+    "close": "Stäng"
   },
   "notification": {
     "startup": "Väcker upp servrarna... sitt still"
@@ -23,6 +23,7 @@
   },
   "nav": {
     "learnings": "Inlärningar",
+    "statistics": "Statistik",
     "logout": "Logga ut"
   },
   "pagination": {
@@ -57,5 +58,8 @@
   },
   "learningDetailsPage": {
     "confirmDelete": "Bekräfta radering av inlärning"
+  },
+  "statistics": {
+    "title": "Förra veckans lärande"
   }
 }

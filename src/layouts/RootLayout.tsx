@@ -1,5 +1,5 @@
-import { NavLink, NavLinkProps, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { LoadingIndicator } from '../components/LoadingIndicator';
+import { NavLink, NavLinkProps, Outlet, useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import { CenteredLoadingIndicator, LoadingIndicator } from '../components/LoadingIndicator';
 import { Button } from '../components/Button';
 import { useLocalization } from '../hooks/useLocalization';
 import { ModalContextProvider } from '../components/modal/ModalContext';
@@ -8,16 +8,22 @@ import { useEffect, useState } from 'react';
 import { Locale, supportedLocales } from '../i18n/config';
 import { NotificationContextProvider } from '../components/notification/NotificationContext';
 
+export const NO_GLOBAL_LOADER = 'NO_GLOBAL_LOADER';
+
 export function RootLayout() {
   const { pathname } = useLocation();
   const atLoginPage = pathname.indexOf('/login') !== -1;
+  const navigation = useNavigation();
+
+  const showLoader = navigation.state === 'loading' && navigation.location?.state !== NO_GLOBAL_LOADER;
+
   return (
     <NotificationContextProvider>
       <ModalContextProvider>
         <div className="w-11/12 lg:w-3/4 m-auto font-nunito transition-[width] duration-500 min-h-svh max-h-svh flex flex-col gap-5 pt-5 md:py-5">
           {!atLoginPage && <MainHeader />}
           <main className="grow flex flex-col overflow-y-auto">
-            <Outlet />
+            {showLoader ? <CenteredLoadingIndicator /> : <Outlet />}
           </main>
           <Footer />
         </div>
@@ -28,14 +34,11 @@ export function RootLayout() {
 
 function MainHeader() {
   const { isLoading: localizationChangePending } = useLocalization();
-
-  const showLoader = localizationChangePending;
-
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center gap-4">
         <h1 className="text-3xl md:text-4xl font-bold align-bottom">wilt</h1>
-        {showLoader && <LoadingIndicator />}
+        {localizationChangePending && <LoadingIndicator />}
       </div>
       <MainMenuNavigation />
     </header>
@@ -46,10 +49,13 @@ function MainMenuNavigation() {
   const { t } = useLocalization();
   const navigate = useNavigate();
   return (
-    <nav className="flex items-center justify-center gap-5 md:gap-10">
-      <ul className="font-bold">
+    <nav className="flex items-center gap-5 md:gap-10">
+      <ul className="font-bold flex gap-5">
         <li>
           <MainHeaderNavLink to={'/learnings'}>{t('nav.learnings')}</MainHeaderNavLink>
+        </li>
+        <li>
+          <MainHeaderNavLink to={'/statistics'}>{t('nav.statistics')}</MainHeaderNavLink>
         </li>
       </ul>
       <Button type="submit" variant="secondary" onClick={() => navigate('/logout')}>
