@@ -16,6 +16,11 @@
   }
 }
 
+.grow-in-delayed {
+  transform: scale(0);
+  animation: grow-in 0.1s ease-in 1s forwards;
+}
+
 .grow-in {
   animation: grow-in 0.25s ease-in-out;
 }
@@ -28,14 +33,26 @@
   }
 }
 
-.slide-in {
-  animation: slide-in 0.5s ease-out;
+.slide-in-x {
+  animation: slide-in-x 0.5s ease-out;
 }
-@keyframes slide-in {
+@keyframes slide-in-x {
   from {
     transform: translateX(100%);
   }
   to {
     transform: translateX(0%);
+  }
+}
+
+.slide-in-y {
+  animation: slide-in-y 0.5s ease-out;
+}
+@keyframes slide-in-y {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
   }
 }

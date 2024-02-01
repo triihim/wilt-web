@@ -72,6 +72,7 @@ export async function createLearningAction(args: ActionFunctionArgs): Promise<Fe
     if (isLearning(response)) {
       await queryClient.invalidateQueries(['learning', response.id]);
       await queryClient.invalidateQueries('learnings');
+      await queryClient.invalidateQueries('statistics');
       return { status: 'success', response };
     } else {
       raiseError('invalid-action-response');
@@ -97,6 +98,7 @@ export async function deleteLearningAction(args: ActionFunctionArgs): Promise<Fe
 
     await queryClient.invalidateQueries(['learning', +learningId]);
     await queryClient.invalidateQueries('learnings');
+    await queryClient.invalidateQueries('statistics');
 
     return { status: 'success', response: null };
   } catch (err: unknown) {

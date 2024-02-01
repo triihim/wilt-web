@@ -46,7 +46,7 @@ function Notification({ type, message }: Notification) {
   return (
     <div
       className={`fixed bottom-5 right-5 left-5 xl:left-1/2 px-4 py-2
-      slide-in transition-all 
+      slide-in-x transition-all 
       border-current border-2 rounded-md 
       font-semibold gap-2 
       flex justify-between 

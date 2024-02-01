@@ -15,6 +15,7 @@ import { logoutLoader } from './routes/logout/loaders';
 import { listPageLoader } from './routes/learnings/listPage/loaders';
 import { LearningListPage } from './routes/learnings/listPage/LearningListPage';
 import { learningLoader } from './routes/learnings/detailsPage/loaders';
+import { statisticsLoader } from './routes/statistics/loaders';
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +59,11 @@ export const router = createBrowserRouter([
                 action: updateLearningAction,
               },
             ],
+          },
+          {
+            path: '/statistics',
+            loader: statisticsLoader,
+            lazy: () => import('./routes/statistics/StatisticsPage'),
           },
         ],
       },

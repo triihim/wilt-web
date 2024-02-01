@@ -23,6 +23,7 @@
   },
   "nav": {
     "learnings": "Learnings",
+    "statistics": "Statistics",
     "logout": "Logout"
   },
   "pagination": {
@@ -57,5 +58,8 @@
   },
   "learningDetailsPage": {
     "confirmDelete": "Confirm deletion of learning"
+  },
+  "statistics": {
+    "title": "Past week of learning"
   }
 }
