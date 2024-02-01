@@ -36,8 +36,6 @@ type BarProps = {
 };
 
 function Bar(props: BarProps) {
-  // Height determined by value / max height
-  // Should fit both the label and bar
   const heightPercentage = (props.value / props.maxValue) * 100;
   return (
     <div className="flex flex-col justify-end items-center gap-1 slide-in-y">
