@@ -14,14 +14,14 @@ export function Input(props: InputProps) {
       <>
         <label
           htmlFor={props.id}
-          className="px-3 flex items-center font-semibold order-first text-slate-700 border-slate-300 border-2 bg-slate-200 rounded-l-md whitespace-nowrap"
+          className="p-2 text-xs md:text-sm flex items-center font-semibold order-first text-slate-700 border-slate-300 border-2 bg-slate-200 rounded-l-md whitespace-nowrap"
         >
           {label}
         </label>
         <input
           {...rest}
           id={props.id}
-          className={`p-2 border-slate-300 border-l-0 border-2 rounded-r-md w-full ${className}`}
+          className={`p-2 text-xs md:text-sm border-slate-300 border-l-0 border-2 rounded-r-md w-full ${className}`}
         ></input>
       </>
     );

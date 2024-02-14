@@ -19,12 +19,14 @@ export function LearningViewControlPanel(props: LearningDetailsControlPanelProps
         </Button>
       </ControlPanel.ControlGroup>
       <ControlPanel.ControlGroup alignItems="right">
-        <Button variant="secondary" onClick={props.onEdit}>
-          {t('common.edit')}
-        </Button>
-        <Button variant="danger" onClick={props.onDelete}>
-          {t('common.delete')}
-        </Button>
+        <div className="flex gap-5">
+          <Button variant="secondary" onClick={props.onEdit}>
+            {t('common.edit')}
+          </Button>
+          <Button variant="danger" onClick={props.onDelete}>
+            {t('common.delete')}
+          </Button>
+        </div>
       </ControlPanel.ControlGroup>
     </ControlPanel>
   );

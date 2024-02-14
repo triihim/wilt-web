@@ -7,7 +7,7 @@ type ControlPanelProps = PropsWithChildren & {
 export function ControlPanel(props: ControlPanelProps) {
   return (
     <div
-      className={`flex justify-between gap-3 p-3 md:gap-5 md:p-5 items-center bg-slate-100  rounded-md ${
+      className={`flex justify-between gap-3 p-3 md:gap-5 md:p-5 items-center bg-slate-100 rounded-md ${
         props.alwaysSingleRow ? 'flex-row' : 'flex-col md:flex-row'
       }`}
     >
@@ -22,7 +22,7 @@ type ControlGroupProps = PropsWithChildren & {
 
 ControlPanel.ControlGroup = function ({ children, alignItems = 'left' }: ControlGroupProps) {
   return (
-    <div className={`flex gap-5 w-full items-center ${{ left: 'justify-start', right: 'justify-end' }[alignItems]}`}>
+    <div className={`flex w-full items-center ${{ left: 'justify-start', right: 'justify-end' }[alignItems]}`}>
       {children}
     </div>
   );
