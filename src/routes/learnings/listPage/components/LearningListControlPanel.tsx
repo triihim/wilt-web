@@ -77,10 +77,11 @@ function LearningCreationForm(props: LearningCreationFormProps) {
     <div className="flex flex-col gap-10">
       <fetcher.Form className="flex flex-col gap-5" method="post" action="/learnings/new">
         <div>
-          <Input autoFocus name="title" label={t('learningForm.title')} disabled={isSubmitting} />
+          <Input id="title" autoFocus name="title" label={t('learningForm.title')} disabled={isSubmitting} />
         </div>
         <div>
           <TextArea
+            id="description"
             name="description"
             label={t('learningForm.description')}
             disabled={isSubmitting}
