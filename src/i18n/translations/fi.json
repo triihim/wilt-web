@@ -4,6 +4,11 @@
     "en": "English",
     "sv": "Svenska"
   },
+  "pageTitles": {
+    "learnings": "Opit | WILT",
+    "details": "Opin tiedot | WILT",
+    "statistics": "Tilastot | WILT"
+  },
   "common": {
     "save": "Tallenna",
     "cancel": "Peruuta",

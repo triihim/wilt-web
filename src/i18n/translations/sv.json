@@ -4,6 +4,11 @@
     "en": "English",
     "sv": "Svenska"
   },
+  "pageTitles": {
+    "learnings": "Inlärningar",
+    "details": "Inlärningsdetaljer | WILT",
+    "statistics": "Statistik | WILT"
+  },
   "common": {
     "save": "Spara",
     "cancel": "Avbryt",
