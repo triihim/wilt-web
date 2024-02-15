@@ -21,7 +21,11 @@
     "close": "Close"
   },
   "notification": {
-    "startup": "Waking up the servers... just sit tight!"
+    "startup": "Waking up the servers... just sit tight!",
+    "a11y": {
+      "label": "Notification",
+      "dismissNotification": "Dismiss notification"
+    }
   },
   "error": {
     "general": "Something went wrong"

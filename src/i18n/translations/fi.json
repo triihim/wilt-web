@@ -21,7 +21,11 @@
     "close": "Sulje"
   },
   "notification": {
-    "startup": "Herätellään servereitä... odota hetki"
+    "startup": "Herätellään servereitä... odota hetki",
+    "a11y": {
+      "label": "Ilmoitus",
+      "dismissNotification": "Sulje ilmoitus"
+    }
   },
   "error": {
     "general": "Jotain meni pieleen"

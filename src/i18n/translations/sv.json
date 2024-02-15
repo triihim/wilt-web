@@ -21,7 +21,11 @@
     "close": "Stäng"
   },
   "notification": {
-    "startup": "Väcker upp servrarna... sitt still"
+    "startup": "Väcker upp servrarna... sitt still",
+    "a11y": {
+      "label": "Notis",
+      "dismissNotification": "Avfärda notis"
+    }
   },
   "error": {
     "general": "Något gick fel"

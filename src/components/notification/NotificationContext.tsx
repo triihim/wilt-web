@@ -43,20 +43,27 @@ const styleMap: { [K in Notification['type']]: string } = {
 function Notification({ type, message }: Notification) {
   const { setNotification } = useContext(NotificationContext);
   const { t } = useLocalization();
+
   return (
     <div
       className={`fixed bottom-5 right-5 left-5 xl:left-1/2 px-4 py-2
-      slide-in-x transition-all 
-      border-current border-2 rounded-md 
-      font-semibold gap-2 
-      flex justify-between 
+        slide-in-x transition-all 
+        border-current border-2 rounded-md 
+        font-semibold gap-2 
+        flex justify-between 
+        focus:outline
+        outline-offset-4
       ${styleMap[type]}`}
     >
-      <div className="flex items-center gap-2">
+      <p className="flex items-center gap-2" tabIndex={0} role="alert" aria-live="polite">
         <span>{React.createElement(iconMap[type], { size: 30 })}</span>
-        <span>{message}</span>
-      </div>
-      <Button variant={'tertiary'} onClick={() => setNotification(null)}>
+        <span aria-label={t('notification.a11y.label')}>{message}</span>
+      </p>
+      <Button
+        variant={'tertiary'}
+        onClick={() => setNotification(null)}
+        aria-description={t('notification.a11y.dismissNotification')}
+      >
         {t('common.close')}
       </Button>
     </div>
