@@ -37,7 +37,7 @@ function MainHeader() {
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <h1 className="text-3xl md:text-4xl font-bold align-bottom">wilt</h1>
+        <h1 className="text-2xl md:text-4xl font-bold align-bottom">wilt</h1>
         {localizationChangePending && <LoadingIndicator />}
       </div>
       <MainMenuNavigation />
@@ -49,8 +49,8 @@ function MainMenuNavigation() {
   const { t } = useLocalization();
   const navigate = useNavigate();
   return (
-    <nav className="flex items-center gap-5 md:gap-10">
-      <ul className="font-bold flex gap-5">
+    <nav className="flex items-center gap-3 md:gap-10">
+      <ul className="font-bold flex text-sm gap-2 md:gap-5 md:text-base">
         <li>
           <MainHeaderNavLink to={'/learnings'}>{t('nav.learnings')}</MainHeaderNavLink>
         </li>
