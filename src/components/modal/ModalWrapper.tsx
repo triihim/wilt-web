@@ -26,7 +26,6 @@ export function ModalWrapper(props: ModalWrapperProps) {
       }
     };
 
-    wrapperRef.current?.focus();
     document.addEventListener('focusin', handleFocusChange);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
@@ -34,6 +33,8 @@ export function ModalWrapper(props: ModalWrapperProps) {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+
+  wrapperRef.current?.focus();
 
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 flex flex-col items-center md:justify-center">

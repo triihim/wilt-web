@@ -18,7 +18,9 @@
     "confirm": "Bekräfta",
     "createdAt": "Skapad",
     "updatedAt": "Uppdaterad",
-    "close": "Stäng"
+    "close": "Stäng",
+    "submitting": "Skickar ...",
+    "validationError": "Felaktig input"
   },
   "notification": {
     "startup": "Väcker upp servrarna... sitt still",
@@ -58,12 +60,16 @@
   },
   "learningForm": {
     "title": "Titel",
-    "description": "Beskrivning",
+    "description": "Beskrivning (valfri)",
     "preview": "Förhandsvisning",
     "validationError": {
       "title": "Titeln ska ha {{minLength}}-{{maxLength}} tecken",
-      "description": "Beskrivningen ska ha {{minLength}}-{{maxLength}} tecken"
-    }
+      "description": "Beskrivningen ska ha {{minLength}} — {{maxLength}} tecken"
+    },
+    "a11y": {
+      "description": "Form för att lägga till ny inlärning"
+    },
+    "successMessage": "Inlärning tillagd"
   },
   "learningDetailsPage": {
     "confirmDelete": "Bekräfta radering av inlärning"

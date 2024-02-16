@@ -18,7 +18,9 @@
     "confirm": "Confirm",
     "createdAt": "Created at",
     "updatedAt": "Updated at",
-    "close": "Close"
+    "close": "Close",
+    "submitting": "Submitting ...",
+    "validationError": "Validation error"
   },
   "notification": {
     "startup": "Waking up the servers... just sit tight!",
@@ -57,13 +59,17 @@
     "addLearning": "Add learning"
   },
   "learningForm": {
-    "title": "Title",
-    "description": "Description",
+    "title": "Title of learning",
+    "description": "Description (optional)",
     "preview": "Preview",
     "validationError": {
       "title": "Title must have {{minLength}}-{{maxLength}} characters",
-      "description": "Description must have {{minLength}}-{{maxLength}} characters"
-    }
+      "description": "Description must have {{minLength}} — {{maxLength}} characters"
+    },
+    "a11y": {
+      "description": "Form for adding a new learning"
+    },
+    "successMessage": "Learning added"
   },
   "learningDetailsPage": {
     "confirmDelete": "Confirm deletion of learning"

@@ -18,7 +18,7 @@ export function ConfirmModal(props: ConfirmModalProps) {
       <SubmitGroup
         onCancel={() => (props.onCancel ? props.onCancel() : setModalContent(null))}
         onSubmit={props.onConfirm}
-        submitText={t('common.confirm')}
+        submitButtonText={t('common.confirm')}
       />
     </div>
   );
