@@ -20,7 +20,8 @@
     "updatedAt": "Uppdaterad",
     "close": "Stäng",
     "submitting": "Skickar ...",
-    "validationError": "Felaktig input"
+    "validationError": "Felaktig input",
+    "loading": "Laddar"
   },
   "notification": {
     "startup": "Väcker upp servrarna... sitt still",

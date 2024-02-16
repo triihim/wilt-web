@@ -20,7 +20,8 @@
     "updatedAt": "Päivitetty",
     "close": "Sulje",
     "submitting": "Tallennetaan ...",
-    "validationError": "Virheellinen syöte"
+    "validationError": "Virheellinen syöte",
+    "loading": "Ladataan"
   },
   "notification": {
     "startup": "Herätellään servereitä... odota hetki",

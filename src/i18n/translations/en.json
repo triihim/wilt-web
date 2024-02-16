@@ -20,7 +20,8 @@
     "updatedAt": "Updated at",
     "close": "Close",
     "submitting": "Submitting ...",
-    "validationError": "Validation error"
+    "validationError": "Validation error",
+    "loading": "Loading"
   },
   "notification": {
     "startup": "Waking up the servers... just sit tight!",
