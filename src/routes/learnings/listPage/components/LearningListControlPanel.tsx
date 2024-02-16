@@ -38,7 +38,7 @@ export function LearningListControlPanel(props: LearningControlsProps) {
       <ControlPanel.ControlGroup>
         <Button
           variant="primary"
-          className={`w-full md:w-fit ${props.highlightAddLearningButton ? 'md:animate-bounce' : ''}`}
+          className={`w-full md:w-fit ${props.highlightAddLearningButton ? 'md:motion-safe:animate-bounce' : ''}`}
           onClick={openLearningCreationModal}
         >
           {t('learningListPage.addLearning')}
