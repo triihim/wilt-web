@@ -33,6 +33,7 @@ export const Initializer = (props: InitializerProps) => {
   const initialize = async () => {
     if (initialized.current) return;
     await Promise.all(props.initFunctions.map((f) => f()));
+    initialized.current = true;
     setLoading(false);
   };
 
