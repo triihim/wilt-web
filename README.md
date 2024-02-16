@@ -31,5 +31,6 @@ npm run dev
 - Add more tests, currently only the learning list page contains tests to test some of the core functionality.
 - Better error handling and messages, currently the app only shows a generic "something went wrong" error message.
 - Add UI notifications for better action feedback and user-experience
-- Statistics feature
+- More comprehensive statistics
+- Improve accessibility, E.g. currently the statistics page is not accessible at all
 - Flashcards feature
