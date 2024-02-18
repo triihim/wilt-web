@@ -49,6 +49,7 @@ export function LearningListControlPanel(props: LearningControlsProps) {
           inlineLabel
           label={t('learningListPage.searchByTitle')}
           id="title-search"
+          data-testid="title-search"
           value={props.titleFilter}
           onChange={(e) => props.onTitleFilterChange(e.target.value)}
         />
