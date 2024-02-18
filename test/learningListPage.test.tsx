@@ -144,7 +144,7 @@ describe('learning list page', () => {
 
     describe('filtering', () => {
       beforeAll(async () => {
-        const searchInputField = await screen.findByPlaceholderText('Search by title');
+        const searchInputField = await screen.findByTestId('title-search');
         fireEvent.change(searchInputField, { target: { value: 'first learning' } });
       });
 
