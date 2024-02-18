@@ -4,6 +4,11 @@
     "en": "English",
     "sv": "Svenska"
   },
+  "pageTitles": {
+    "learnings": "Opit | WILT",
+    "details": "Opin tiedot | WILT",
+    "statistics": "Tilastot | WILT"
+  },
   "common": {
     "save": "Tallenna",
     "cancel": "Peruuta",
@@ -13,10 +18,17 @@
     "confirm": "Vahvista",
     "createdAt": "Luotu",
     "updatedAt": "Päivitetty",
-    "close": "Sulje"
+    "close": "Sulje",
+    "submitting": "Tallennetaan ...",
+    "validationError": "Virheellinen syöte",
+    "loading": "Ladataan"
   },
   "notification": {
-    "startup": "Herätellään servereitä... odota hetki"
+    "startup": "Herätellään servereitä... odota hetki",
+    "a11y": {
+      "label": "Ilmoitus",
+      "dismissNotification": "Sulje ilmoitus"
+    }
   },
   "error": {
     "general": "Jotain meni pieleen"
@@ -48,13 +60,17 @@
     "addLearning": "Lisää oppi"
   },
   "learningForm": {
-    "title": "Otsikko",
-    "description": "Kuvaus",
+    "title": "Opin otsikko",
+    "description": "Tarkempi kuvaus (valinnainen)",
     "preview": "Esikatselu",
     "validationError": {
       "title": "Otsikon tulee olla {{minLength}}-{{maxLength}} merkkiä pitkä",
-      "description": "Kuvauksen tulee olla {{minLength}}-{{maxLength}} merkkiä pitkä"
-    }
+      "description": "Kuvauksen tulee olla {{minLength}} — {{maxLength}} merkkiä pitkä"
+    },
+    "a11y": {
+      "description": "Lomake uuden opin lisäämiseksi"
+    },
+    "successMessage": "Oppi lisätty"
   },
   "learningDetailsPage": {
     "confirmDelete": "Vahvista, että haluat poistaa opin"

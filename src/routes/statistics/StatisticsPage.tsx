@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BarPlot } from '../../components/BarPlot';
 import { useAssertedLoaderData } from '../../hooks/useAssertedLoaderData';
 import { useLocalization } from '../../hooks/useLocalization';
@@ -9,6 +10,10 @@ const loaderDataValidator = (data: unknown) =>
 function StatisticsPage() {
   const { t, dayjs } = useLocalization();
   const loaderData = useAssertedLoaderData<LoaderResponse>(loaderDataValidator);
+
+  useEffect(() => {
+    document.title = t('pageTitles.statistics');
+  }, [t]);
 
   const plotData = loaderData.data.reduce(
     (plot, entry) => ({ ...plot, [dayjs(entry.date).format('ddd')]: entry.learningCount }),

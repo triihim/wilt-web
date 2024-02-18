@@ -4,6 +4,11 @@
     "en": "English",
     "sv": "Svenska"
   },
+  "pageTitles": {
+    "learnings": "Inlärningar",
+    "details": "Inlärningsdetaljer | WILT",
+    "statistics": "Statistik | WILT"
+  },
   "common": {
     "save": "Spara",
     "cancel": "Avbryt",
@@ -13,10 +18,17 @@
     "confirm": "Bekräfta",
     "createdAt": "Skapad",
     "updatedAt": "Uppdaterad",
-    "close": "Stäng"
+    "close": "Stäng",
+    "submitting": "Skickar ...",
+    "validationError": "Felaktig input",
+    "loading": "Laddar"
   },
   "notification": {
-    "startup": "Väcker upp servrarna... sitt still"
+    "startup": "Väcker upp servrarna... sitt still",
+    "a11y": {
+      "label": "Notis",
+      "dismissNotification": "Avfärda notis"
+    }
   },
   "error": {
     "general": "Något gick fel"
@@ -49,12 +61,16 @@
   },
   "learningForm": {
     "title": "Titel",
-    "description": "Beskrivning",
+    "description": "Beskrivning (valfri)",
     "preview": "Förhandsvisning",
     "validationError": {
       "title": "Titeln ska ha {{minLength}}-{{maxLength}} tecken",
-      "description": "Beskrivningen ska ha {{minLength}}-{{maxLength}} tecken"
-    }
+      "description": "Beskrivningen ska ha {{minLength}} — {{maxLength}} tecken"
+    },
+    "a11y": {
+      "description": "Form för att lägga till ny inlärning"
+    },
+    "successMessage": "Inlärning tillagd"
   },
   "learningDetailsPage": {
     "confirmDelete": "Bekräfta radering av inlärning"

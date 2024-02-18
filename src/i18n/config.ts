@@ -46,6 +46,7 @@ export const initI18n = async (initialLocale?: Locale) => {
   const userLocale = initialLocale || clientStorage.getLocale() || navigator.language;
   const initialLanguage = toSupportedLocale(userLocale);
   const translation = await import(`./translations/${initialLanguage}.json`);
+  document.documentElement.lang = initialLanguage;
   i18n.use(initReactI18next).init({
     resources: { [initialLanguage]: { translation } },
     lng: initialLanguage,

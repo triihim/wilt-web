@@ -37,6 +37,7 @@ export function LocaleContextProvider(props: PropsWithChildren) {
     await changeI18nLanguage(locale);
     await changeDayjsLocale(locale);
     setLocale(locale);
+    document.documentElement.lang = locale;
     clientStorage.setLocale(locale);
     setIsLoading(false);
   };

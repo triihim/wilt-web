@@ -124,6 +124,7 @@ function LearningEditView(props: LearningEditViewProps) {
       <div className="flex flex-col gap-3 grow overflow-y-auto">
         <div>
           <Input
+            id="title"
             name="title"
             label={t('learningForm.title')}
             className="font-bold text-3xl"
@@ -134,6 +135,7 @@ function LearningEditView(props: LearningEditViewProps) {
         <div className="grow flex gap-5">
           <div className="flex flex-col md:basis-1/2 grow">
             <TextArea
+              id="description"
               name="description"
               className="grow resize-none"
               label={t('learningForm.description')}

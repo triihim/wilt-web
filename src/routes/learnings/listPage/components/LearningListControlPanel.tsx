@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useNavigate, useFetcher } from 'react-router-dom';
 import { Button } from '../../../../components/Button';
 import { ControlPanel } from '../../../../components/ControlPanel';
@@ -8,6 +8,7 @@ import { TextArea } from '../../../../components/forms/TextArea';
 import { ModalContext } from '../../../../components/modal/ModalContext';
 import { ILearning, FetcherData } from '../../../../types';
 import { useLocalization } from '../../../../hooks/useLocalization';
+import { NotificationContext } from '../../../../components/notification/NotificationContext';
 
 type LearningControlsProps = {
   titleFilter: string;
@@ -37,7 +38,7 @@ export function LearningListControlPanel(props: LearningControlsProps) {
       <ControlPanel.ControlGroup>
         <Button
           variant="primary"
-          className={`w-full md:w-fit ${props.highlightAddLearningButton ? 'md:animate-bounce' : ''}`}
+          className={`w-full md:w-fit ${props.highlightAddLearningButton ? 'md:motion-safe:animate-bounce' : ''}`}
           onClick={openLearningCreationModal}
         >
           {t('learningListPage.addLearning')}
@@ -45,7 +46,8 @@ export function LearningListControlPanel(props: LearningControlsProps) {
       </ControlPanel.ControlGroup>
       <ControlPanel.ControlGroup>
         <Input
-          placeholder={t('learningListPage.searchByTitle')}
+          inlineLabel
+          label={t('learningListPage.searchByTitle')}
           id="title-search"
           value={props.titleFilter}
           onChange={(e) => props.onTitleFilterChange(e.target.value)}
@@ -63,24 +65,28 @@ type LearningCreationFormProps = {
 function LearningCreationForm(props: LearningCreationFormProps) {
   const fetcher = useFetcher<FetcherData>();
   const { t } = useLocalization();
+  const { setNotification } = useContext(NotificationContext);
+  const titleInputRef = useRef<HTMLInputElement | null>(null);
 
   const isSubmitting = fetcher.state === 'submitting';
 
   useEffect(() => {
     if (fetcher.data?.status === 'success') {
+      setNotification({ type: 'success', message: t('learningForm.successMessage') });
       // TODO: Validate response type
       props.onSubmitted(fetcher.data.response as ILearning);
     }
   }, [fetcher.data, props]);
 
   return (
-    <div className="flex flex-col gap-10">
+    <section aria-description={t('learningForm.a11y.description')}>
       <fetcher.Form className="flex flex-col gap-5" method="post" action="/learnings/new">
         <div>
-          <Input autoFocus name="title" label={t('learningForm.title')} disabled={isSubmitting} />
+          <Input id="title" name="title" label={t('learningForm.title')} disabled={isSubmitting} ref={titleInputRef} />
         </div>
         <div>
           <TextArea
+            id="description"
             name="description"
             label={t('learningForm.description')}
             disabled={isSubmitting}
@@ -91,10 +97,10 @@ function LearningCreationForm(props: LearningCreationFormProps) {
         </div>
         <SubmitGroup
           errors={fetcher.data?.status === 'error' ? fetcher.data.messages : []}
-          disabled={isSubmitting}
+          submitting={isSubmitting}
           onCancel={props.onCancel}
         />
       </fetcher.Form>
-    </div>
+    </section>
   );
 }
